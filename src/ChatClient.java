@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -14,9 +16,11 @@ public class ChatClient {
     static JButton sendButton = new JButton("Send");
     static BufferedReader in;
     static PrintWriter out;
+    static JLabel nameLabel = new JLabel("        ");
 
     ChatClient() {
         chatWindow.setLayout(new FlowLayout());
+        chatWindow.add(nameLabel);
         chatWindow.add(new JScrollPane(chatArea));
         chatWindow.add(blackLabel);
         chatWindow.add(textField);
@@ -26,6 +30,9 @@ public class ChatClient {
         chatWindow.setVisible(true);
         textField.setEditable(false);
         chatArea.setEditable(false);
+
+        sendButton.addActionListener(new Listener());
+        textField.addActionListener(new Listener());
     }
 
     void startChat() throws Exception {
@@ -57,8 +64,12 @@ public class ChatClient {
                     JOptionPane.WARNING_MESSAGE);
             out.println(name);
         }
-        else if(str.equals("NAMEACCEPTED")) {
+        else if(str.startsWith("NAMEACCEPTED")) {
             textField.setEditable(true);
+            nameLabel.setText("You are logged in as: " +str.substring(12));
+        }
+        else {
+            chatArea.append(str + "\n");
         }
         }
     }
@@ -72,5 +83,13 @@ public class ChatClient {
             e.printStackTrace();
         }
 
+    }
+}
+
+class Listener implements ActionListener {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        ChatClient.out.println(ChatClient.textField.getText());
+        ChatClient.textField.setText("");
     }
 }
