@@ -43,9 +43,26 @@ class ConversationHandler extends Thread {
             int count = 0;
             while (true) {
                 if (count > 0) {
-                    out.println("Name taken");
+                    out.println("NAMEALREADYEXISTS");
                 }
+                else {
+                    out.println("NAMEREQUIRED");
+
+                }
+
+                name = in.readLine();
+
+                if (name == null){
+                    return;
+                }
+                if (!ChatServer.userNames.contains(name)) {
+                    ChatServer.userNames.add(name);
+                    break;
+                }
+                count++;
             }
+            out.println("NAMEACCEPTED");
+            ChatServer.printWriters.add(out);
 
         }
         catch (Exception e) {
