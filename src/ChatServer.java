@@ -32,9 +32,16 @@ class ConversationHandler extends Thread {
     BufferedReader in;
     PrintWriter out;
     String name;
+    //for logs under
+    PrintWriter pw;
+    static FileWriter fw;
+    static BufferedWriter bw;
 
     public ConversationHandler(Socket socket) throws IOException {
         this.socket = socket;
+        fw = new FileWriter("src/logs.txt", true); //true means append
+        bw = new BufferedWriter(fw); // write entire string at the time to a file
+        pw = new PrintWriter(bw, true);
     }
     public void run() {
         try {
@@ -64,11 +71,13 @@ class ConversationHandler extends Thread {
             out.println("NAMEACCEPTED"+name);
             ChatServer.printWriters.add(out);
 
-            while (true) {
+            while (true) { //read all the messages
                 String message = in.readLine();
                 if (message == null) {
                     return;
                 }
+
+                pw.println(name + ": " + message);
 
                 for (PrintWriter writer : ChatServer.printWriters) {
                     writer.println(name + ": " + message);
