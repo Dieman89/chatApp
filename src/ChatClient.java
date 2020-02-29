@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,29 +8,56 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ChatClient {
 
+    static JList users = new JList();
     static JFrame chatWindow = new JFrame("Chat Application");
     static JTextArea chatArea = new JTextArea(22, 40);
     static JTextField textField = new JTextField(40);
-    static JLabel blackLabel = new JLabel("              ");
     static JButton sendButton = new JButton("Send");
     static BufferedReader in;
     static PrintWriter out;
     static JLabel nameLabel = new JLabel("        ");
 
     ChatClient() {
-        chatWindow.setLayout(new FlowLayout());
-        chatWindow.add(nameLabel);
-        chatWindow.add(new JScrollPane(chatArea));
-        chatWindow.add(blackLabel);
-        chatWindow.add(textField);
-        chatWindow.add(sendButton);
-        chatWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        chatWindow.setSize(475, 500);
+        chatWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        chatWindow.setSize(new Dimension(700, 600));
+
+        JPanel chatPanel =  new JPanel(new BorderLayout());
+        chatPanel.setPreferredSize(new Dimension(400, 570));
+
+        textField.setBackground(new Color(153, 170, 181));
+        textField.setForeground(Color.WHITE);
+        JPanel textPanel = new JPanel(new BorderLayout());
+        textPanel.add(textField, BorderLayout.CENTER);
+        textPanel.add(sendButton, BorderLayout.EAST);
+        textPanel.setPreferredSize(new Dimension(400, 30));
+
+        chatArea.setForeground(Color.WHITE);
+        chatArea.setBackground(new Color(44, 47, 51));
+        chatPanel.add(nameLabel, BorderLayout.NORTH);
+        chatPanel.add(new JScrollPane(chatArea), BorderLayout.CENTER);
+        chatPanel.add(textPanel, BorderLayout.SOUTH);
+
+        JPanel usersPanel = new JPanel();
+        usersPanel.setPreferredSize(new Dimension(100, 600));
+        usersPanel.setBackground(new Color(35,39,42));
+        usersPanel.setForeground(Color.WHITE);
+        usersPanel.add(users);
+        users.setForeground(Color.WHITE);
+        users.setBackground(new Color(35,39,42));
+        users.setOpaque(false);
+
+        chatWindow.add(usersPanel, BorderLayout.EAST);
+
+        chatWindow.add(chatPanel);
         chatWindow.setVisible(true);
         textField.setEditable(false);
+        chatWindow.setLocationRelativeTo(null);
         chatArea.setEditable(false);
 
         sendButton.addActionListener(new Listener());
@@ -82,10 +110,24 @@ public class ChatClient {
             System.out.println(nameLabel.getText());
             out.println("PONG" + name);
             System.out.println(name + "IS SENDING A PONG");
-        }
+        } else if (str.startsWith("//")) {
+            String arrayNames[] = str.substring(2).split(",");
+            System.out.println(Arrays.asList(arrayNames));
+
+            arrayNames[0] = "@" + arrayNames[0];
+
+            DefaultListModel<String> defaultListModel = new DefaultListModel<>();
+            defaultListModel.addAll(Arrays.asList(arrayNames));
+            users.setModel(defaultListModel);
+
+        } else if (str.startsWith("NEWADMIN")) {
+                System.out.println("Changing admin");
+                chatArea.append("Previous admin " + str.substring(8).split("/")[0] +
+                        "has disconnected, new admin is: " + str.substring(8).split("/")[1]);
+            }
         else {
-            chatArea.append(str + "\n");
-        }
+                chatArea.append(str + "\n");
+            }
         }
         });
         newThread.start();
@@ -110,3 +152,4 @@ class Listener implements ActionListener {
         ChatClient.textField.setText("");
     }
 }
+
