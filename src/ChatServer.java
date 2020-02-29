@@ -2,11 +2,14 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
 
 public class ChatServer {
 
     static ArrayList<String> userNames = new ArrayList<String>();
     static ArrayList<PrintWriter> printWriters = new ArrayList<PrintWriter>();
+    static ArrayList<String> onlineUsers = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -71,21 +74,56 @@ class ConversationHandler extends Thread {
             out.println("NAMEACCEPTED"+name);
             ChatServer.printWriters.add(out);
 
+            Thread newThread = new Thread(() -> {
+                int seconds = 0;
+                while (seconds <= 5) {
+                    seconds++;
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if (seconds == 5) {
+                        ChatServer.onlineUsers.clear();
+                        out.println("PING");
+                        seconds = 0;
+                    }
+                }
+            });
+            newThread.start();
+
+
+
             while (true) { //read all the messages
                 String message = in.readLine();
                 if (message == null) {
                     return;
-                }
+                } else if (message.startsWith("PONG")) {
+                    String nickname = message.substring(4);
+                    if (!ChatServer.onlineUsers.contains(nickname))
+                        ChatServer.onlineUsers.add(nickname);
 
-                pw.println(name + ": " + message);
+                    compareArrays(nickname);
 
-                for (PrintWriter writer : ChatServer.printWriters) {
-                    writer.println(name + ": " + message);
+                } else {
+
+                    pw.println(name + ": " + message);
+
+                    for (PrintWriter writer : ChatServer.printWriters) {
+                        writer.println(name + ": " + message);
+                    }
                 }
             }
+
+
         }
         catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    private void compareArrays(String nickname) {
+        ChatServer.userNames = ChatServer.onlineUsers;
+        System.out.println(ChatServer.userNames);
     }
 }

@@ -42,7 +42,10 @@ public class ChatClient {
                 "IP Address Required!",
                 JOptionPane.PLAIN_MESSAGE);
 
+
+
         Socket soc = new Socket(ipAddress, 9806);
+
         in = new BufferedReader(new InputStreamReader(soc.getInputStream()));
         out = new PrintWriter(soc.getOutputStream(), true);
 
@@ -66,7 +69,10 @@ public class ChatClient {
         }
         else if(str.startsWith("NAMEACCEPTED")) {
             textField.setEditable(true);
-            nameLabel.setText("You are logged in as: " +str.substring(12));
+            nameLabel.setText("You are logged in as: " +str.substring(12) + "\n");
+        } else if(str.startsWith("PING")) {
+            System.out.println(nameLabel.getText());
+            out.println("PONG" + nameLabel.getText().substring(22));
         }
         else {
             chatArea.append(str + "\n");
