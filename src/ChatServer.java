@@ -1,20 +1,42 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.concurrent.TimeUnit;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class ChatServer {
 
     static ArrayList<String> userNames = new ArrayList<String>();
     static ArrayList<PrintWriter> printWriters = new ArrayList<PrintWriter>();
     static ArrayList<String> onlineUsers = new ArrayList<>();
+    static int seconds = 0;
+
 
 
     public static void main(String[] args) {
 
         System.out.println("Waiting for clients...");
+        Thread newThread = new Thread(() -> {
+        while (seconds <= 17) {
+            seconds++;
+            try {
+                Thread.sleep(1000);
+                System.out.println(seconds);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (seconds == 15) {
+                ConversationHandler.broadcast();
+            }
+            else if (seconds == 17) {
+                ConversationHandler.compareArrays();
+                seconds = 0;
+            }
+        }
+        });
+        newThread.start();
         try {
             ServerSocket ss = new ServerSocket(9806);
             while (true) {
@@ -33,7 +55,7 @@ public class ChatServer {
 class ConversationHandler extends Thread {
     Socket socket;
     BufferedReader in;
-    PrintWriter out;
+    static PrintWriter out;
     String name;
     //for logs under
     PrintWriter pw;
@@ -46,23 +68,24 @@ class ConversationHandler extends Thread {
         bw = new BufferedWriter(fw); // write entire string at the time to a file
         pw = new PrintWriter(bw, true);
     }
+
     public void run() {
         try {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out = new PrintWriter(socket.getOutputStream(), true);
+
             int count = 0;
             while (true) {
                 if (count > 0) {
                     out.println("NAMEALREADYEXISTS");
-                }
-                else {
+                } else {
                     out.println("NAMEREQUIRED");
 
                 }
 
                 name = in.readLine();
 
-                if (name == null){
+                if (name == null) {
                     return;
                 }
                 if (!ChatServer.userNames.contains(name)) {
@@ -71,28 +94,8 @@ class ConversationHandler extends Thread {
                 }
                 count++;
             }
-            out.println("NAMEACCEPTED"+name);
+            out.println("NAMEACCEPTED" + name);
             ChatServer.printWriters.add(out);
-
-            Thread newThread = new Thread(() -> {
-                int seconds = 0;
-                while (seconds <= 5) {
-                    seconds++;
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (seconds == 5) {
-                        ChatServer.onlineUsers.clear();
-                        out.println("PING");
-                        seconds = 0;
-                    }
-                }
-            });
-            newThread.start();
-
-
 
             while (true) { //read all the messages
                 String message = in.readLine();
@@ -100,11 +103,10 @@ class ConversationHandler extends Thread {
                     return;
                 } else if (message.startsWith("PONG")) {
                     String nickname = message.substring(4);
-                    if (!ChatServer.onlineUsers.contains(nickname))
+                    if (!ChatServer.onlineUsers.contains(nickname)) {
                         ChatServer.onlineUsers.add(nickname);
-
-                    compareArrays(nickname);
-
+                        System.out.println("Adding: " + nickname + " to online list");
+                    }
                 } else {
 
                     pw.println(name + ": " + message);
@@ -116,14 +118,25 @@ class ConversationHandler extends Thread {
             }
 
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
+        }
+
+    public static void compareArrays() {
+        System.out.println("USERNAMES BEFORE: " + ChatServer.userNames);
+        System.out.println("ONLINE BEFORE: " + ChatServer.onlineUsers);
+
+
+      ChatServer.userNames.removeIf(x -> (!ChatServer.onlineUsers.contains(x)));
+      ChatServer.onlineUsers.clear();
+      System.out.println("USERNAME AFTER: " + ChatServer.userNames);
+      System.out.println("ONLINE AFTER: " + ChatServer.onlineUsers);
+
     }
 
-    private void compareArrays(String nickname) {
-        ChatServer.userNames = ChatServer.onlineUsers;
-        System.out.println(ChatServer.userNames);
+    public static void broadcast(){
+      out.println("PING");
     }
+
 }

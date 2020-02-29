@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -48,10 +49,15 @@ public class ChatClient {
 
         in = new BufferedReader(new InputStreamReader(soc.getInputStream()));
         out = new PrintWriter(soc.getOutputStream(), true);
-
+        Thread newThread = new Thread(() -> {
         while (true) {
-        String str = in.readLine();
-        if (str.equals("NAMEREQUIRED")) {
+            String str = null;
+            try {
+                str = in.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (str.equals("NAMEREQUIRED")) {
             String name = JOptionPane.showInputDialog(
                     chatWindow,
                     "Enter an unique name:",
@@ -69,15 +75,20 @@ public class ChatClient {
         }
         else if(str.startsWith("NAMEACCEPTED")) {
             textField.setEditable(true);
-            nameLabel.setText("You are logged in as: " +str.substring(12) + "\n");
-        } else if(str.startsWith("PING")) {
+            String name = str.substring(12);
+            nameLabel.setText("You are logged in as: " +name + "\n");
+        } else if(str.equals("PING")) {
+            String name = nameLabel.getText().substring(22);
             System.out.println(nameLabel.getText());
-            out.println("PONG" + nameLabel.getText().substring(22));
+            out.println("PONG" + name);
+            System.out.println(name + "IS SENDING A PONG");
         }
         else {
             chatArea.append(str + "\n");
         }
         }
+        });
+        newThread.start();
     }
 
     public static void main(String[] args) {
