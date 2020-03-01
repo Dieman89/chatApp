@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7bdd69f-8e13-4120-8cbd-36b473c5a8e8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chat/ChatClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chat/ChatClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chat/ChatServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chat/ChatServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chat/Listener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chat/Listener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chat/logs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chat/logs.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/logs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/logs.txt" afterDir="false" />
@@ -57,6 +61,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\44784\Desktop\chatApp\chatApp\fonts" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/images" />
       <recent name="$PROJECT_DIR$" />
@@ -125,6 +130,9 @@
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/chatApp" />
+    </ignored-roots>
     <MESSAGE value="First Commit" />
     <option name="LAST_COMMIT_MESSAGE" value="First Commit" />
   </component>
@@ -145,25 +153,25 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="344" y="53" key="CommitChangelistDialog2/0.23.1440.877@0.23.1440.877" timestamp="1582919691058" />
-    <state width="958" height="280" key="GridCell.Tab.0.bottom" timestamp="1583006931603">
+    <state width="1921" height="277" key="GridCell.Tab.0.bottom" timestamp="1583070190467">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="958" height="280" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583006931603" />
+    <state width="1921" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583070190467" />
     <state width="1419" height="230" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1582982451648" />
-    <state width="958" height="280" key="GridCell.Tab.0.center" timestamp="1583006931603">
+    <state width="1921" height="277" key="GridCell.Tab.0.center" timestamp="1583070190467">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="958" height="280" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583006931603" />
+    <state width="1921" height="277" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583070190467" />
     <state width="1419" height="230" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1582982451647" />
-    <state width="958" height="280" key="GridCell.Tab.0.left" timestamp="1583006931603">
+    <state width="1921" height="277" key="GridCell.Tab.0.left" timestamp="1583070190466">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="958" height="280" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583006931603" />
+    <state width="1921" height="277" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583070190466" />
     <state width="1419" height="230" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1582982451647" />
-    <state width="958" height="280" key="GridCell.Tab.0.right" timestamp="1583006931603">
+    <state width="1921" height="277" key="GridCell.Tab.0.right" timestamp="1583070190467">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="958" height="280" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583006931603" />
+    <state width="1921" height="277" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583070190467" />
     <state width="1419" height="230" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1582982451648" />
     <state width="916" height="351" key="GridCell.Tab.1.bottom" timestamp="1583000842502">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -201,10 +209,10 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1419" height="285" key="GridCell.Tab.2.right/0.23.1440.877@0.23.1440.877" timestamp="1582978387534" />
-    <state x="555" y="47" key="SettingsEditor" timestamp="1582984315154">
+    <state x="555" y="47" key="SettingsEditor" timestamp="1583020272828">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="555" y="47" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1582984315154" />
+    <state x="555" y="47" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1583020272828" />
     <state x="416" y="63" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1582922864626" />
     <state x="534" y="270" key="Vcs.Push.Dialog.v2" timestamp="1582920553096">
       <screen x="0" y="23" width="1440" height="877" />
