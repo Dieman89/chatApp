@@ -107,10 +107,18 @@ class ConversationHandler extends Thread {
                     }
                     break;
                 }
+
                 //////
                 count++;
             }
             out.println("NAMEACCEPTED" + name);
+            if (ChatServer.onlineUsers.size() == 1) {
+                out.println("FIRST");
+            }
+            for (PrintWriter out: ChatServer.printWriters) {
+                out.println(">> [" + name + " is online [IP: " + socket.getInetAddress()
+                        + ", PORT: " + socket.getPort() + "] <<");
+            }
             ChatServer.printWriters.add(out);
 
             while (true) { //read all the messages
@@ -194,6 +202,10 @@ class ConversationHandler extends Thread {
         }
         for (PrintWriter out : ChatServer.printWriters) {
             out.println("//" + names);
+
+        }
+        for (PrintWriter out : ChatServer.printWriters) {
+            out.println("SIZE" + ChatServer.userNames.size());
         }
     }
 

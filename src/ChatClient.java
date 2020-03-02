@@ -1,25 +1,24 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ChatClient {
 
     DefaultListModel<String> defaultListModel = new DefaultListModel<>();
-    static JList users = new JList();
+    static JList<String> users = new JList<>();
     static JFrame chatWindow = new JFrame("Chat Application");
-    static JTextArea chatArea = new JTextArea(22, 40);
+    static JTextArea chatArea = new JTextArea();
     static JTextField textField = new JTextField(40);
     static JButton sendButton = new JButton("Send");
     static BufferedReader in;
     static PrintWriter out;
-    static JLabel nameLabel = new JLabel("        ");
+    static JLabel nameLabel = new JLabel("");
     static JLabel countdownLabel = new JLabel("");
+    static JLabel onlineLabel = new JLabel("");
 
     ChatClient() {
         chatWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -33,9 +32,11 @@ public class ChatClient {
         textField.setForeground(Color.WHITE);
         JPanel textPanel = new JPanel(new BorderLayout());
         textPanel.add(textField, BorderLayout.CENTER);
+        chatArea.setBorder(BorderFactory.createEmptyBorder());
         textPanel.add(sendButton, BorderLayout.EAST);
         textPanel.setPreferredSize(new Dimension(400, 30));
 
+        nameLabel.setPreferredSize(new Dimension(400, 20));
         chatArea.setForeground(Color.WHITE);
         chatArea.setBackground(new Color(44, 47, 51));
         chatPanel.add(nameLabel, BorderLayout.NORTH);
@@ -57,6 +58,12 @@ public class ChatClient {
         countdownLabel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.WHITE));
         usersPanel.add(countdownLabel, BorderLayout.SOUTH);
 
+        onlineLabel.setForeground(Color.WHITE);
+        onlineLabel.setPreferredSize(new Dimension(100, 20));
+        onlineLabel.setHorizontalAlignment(JLabel.CENTER);
+        onlineLabel.setBorder(BorderFactory.createMatteBorder(0, 0,1,0, Color.WHITE));
+        usersPanel.add(onlineLabel, BorderLayout.NORTH);
+
 
         chatWindow.add(usersPanel, BorderLayout.EAST);
 
@@ -66,19 +73,21 @@ public class ChatClient {
         chatWindow.setLocationRelativeTo(null);
         chatArea.setEditable(false);
 
-        chatArea.setFont(new Font("/fonts/Arventa.tff", Font.BOLD, 15));
+        chatArea.setFont(new Font("/fonts/Arventa.tff", Font.BOLD, 13));
+        onlineLabel.setFont(new Font("/fonts/Myriad.tff", Font.ITALIC, 11));
+        users.setFont(new Font("/fonts/SansPro.tff", Font.PLAIN, 13));
 
         sendButton.addActionListener(new Listener());
         textField.addActionListener(new Listener());
     }
 
     void startChat() throws Exception {
+
         String ipAddress = JOptionPane.showInputDialog(
                 chatWindow,
                 "Enter IP Address:",
                 "IP Address Required!",
                 JOptionPane.PLAIN_MESSAGE);
-
 
         Socket soc = new Socket(ipAddress, 9806);
 
@@ -92,6 +101,7 @@ public class ChatClient {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                assert str != null;
                 if (str.equals("NAMEREQUIRED")) {
                     String name = JOptionPane.showInputDialog(
                             chatWindow,
@@ -121,7 +131,7 @@ public class ChatClient {
                 } else if (str.startsWith("//")) {
                     String finalStr = str;
                     Thread listThread = new Thread(() -> {
-                        String arrayNames[] = finalStr.substring(2).split(",");
+                        String[] arrayNames = finalStr.substring(2).split(",");
                         System.out.println(Arrays.asList(arrayNames));
 
                         arrayNames[0] = "@" + arrayNames[0];
@@ -134,19 +144,21 @@ public class ChatClient {
 
                 } else if (str.startsWith("NEWADMIN")) {
                     System.out.println("Changing admin");
-                    chatArea.append("Previous admin " + str.substring(8).split("/")[0] +
-                            " has disconnected, new admin is: " + str.substring(8).split("/")[1]);
+                    chatArea.append(">> [Previous admin " + str.substring(8).split("/")[0] +
+                            " has disconnected, new admin is: " + str.substring(8).split("/")[1] + "] <<" + "\n");
                 } else if (str.equals("FIRST")) {
                     JOptionPane.showMessageDialog(chatWindow, "You are the first user in the chat");
                 } else if (str.startsWith("OFFLINE")) {
-                    chatArea.append(str.substring(7) + " is offline" + "\n");
+                    chatArea.append(">> [" + str.substring(7) + " is offline] <<" + "\n" + "");
                     defaultListModel.removeElement(str.substring(7));
                     users.setModel(defaultListModel);
                 } else if (str.startsWith("COUNT")) {
                     countdownLabel.setText("Update in " + str.substring(5));
+                } else if (str.startsWith("SIZE")) {
+                    onlineLabel.setText("Online: " + str.substring(4));
+                    System.out.println("Total users: " + str.substring(4));
                 } else {
                     chatArea.append(str + "\n");
-
                 }
             }
         });
