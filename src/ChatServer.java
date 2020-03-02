@@ -1,39 +1,38 @@
-import javax.swing.*;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.SQLOutput;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class ChatServer {
 
     static ArrayList<String> userNames = new ArrayList<String>();
     static ArrayList<PrintWriter> printWriters = new ArrayList<PrintWriter>();
     static ArrayList<String> onlineUsers = new ArrayList<>();
-    static int seconds = 0;
-    static int counter;
-
+    static int seconds = 5;
 
     public static void main(String[] args) {
 
         System.out.println("Waiting for clients...");
         Thread newThread = new Thread(() -> {
-            while (seconds <= 5) {
-                seconds++;
+
+            while (seconds >= 0) {
+                Thread secondThread = new Thread(() -> {
+                    updateSeconds(seconds);
+                });
+                secondThread.start();
+                seconds--;
                 try {
                     Thread.sleep(1000);
                     System.out.println(seconds);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                if (seconds == 4) {
-                    ConversationHandler.broadcast();
-                } else if (seconds == 5) {
-                    ConversationHandler.compareArrays();
-                    seconds = 0;
+                if (seconds == 0) {
+                    if (ChatServer.userNames.size() > 0) {
+                        ConversationHandler.compareArrays();
+                    }
+                    seconds = 5;
                 }
             }
         });
@@ -41,15 +40,20 @@ public class ChatServer {
         try {
             ServerSocket ss = new ServerSocket(9806);
             while (true) {
-                Socket soc = ss.accept();
+                Socket soc;
+                soc = ss.accept();
                 System.out.println("Connection Established");
                 ConversationHandler handler = new ConversationHandler(soc);
                 handler.start();
-
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void updateSeconds(int seconds) {
+        ConversationHandler.sendCount(seconds);
     }
 }
 
@@ -70,6 +74,12 @@ class ConversationHandler extends Thread {
         pw = new PrintWriter(bw, true);
     }
 
+    public static void sendCount(int seconds) {
+        for (PrintWriter out : ChatServer.printWriters) {
+            out.println("COUNT" + seconds);
+        }
+    }
+
     public void run() {
         try {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -88,10 +98,16 @@ class ConversationHandler extends Thread {
                 if (name == null) {
                     return;
                 }
+
+                // DO NOT MODIFY THIS CODE
                 if (!ChatServer.userNames.contains(name)) {
                     ChatServer.userNames.add(name);
+                    if (!ChatServer.onlineUsers.contains(name)) {
+                        ChatServer.onlineUsers.add(name);
+                    }
                     break;
                 }
+                //////
                 count++;
             }
             out.println("NAMEACCEPTED" + name);
@@ -117,69 +133,75 @@ class ConversationHandler extends Thread {
                 }
             }
         } catch (Exception e) {
+            System.out.println("Connection interrupted");
 
-            if (ChatServer.onlineUsers.size() > 1) {
+            if (ChatServer.printWriters.size() > 0) {
+                for (PrintWriter out : ChatServer.printWriters) {
+                    System.out.println("I'm in");
+                    out.println("OFFLINE" + name);
+                }
+                ChatServer.onlineUsers.remove(name);
+            }
+
+
+            if (ChatServer.onlineUsers.size() > 0) {
                 String disconnected = name;
                 String newAdmin = "";
 
-                if (ChatServer.userNames.get(0).equals(name)) {
-                    System.out.println("Admin disconnected");
-                    ChatServer.userNames.remove(name);
-                    ChatServer.onlineUsers.remove(name);
-                    newAdmin = ChatServer.userNames.get(0);
-                } else {
-                    ChatServer.userNames.remove(name);
-                    ChatServer.onlineUsers.remove(name);
-                }
+                if (ChatServer.userNames.size() > 1) {
+                    if (ChatServer.userNames.get(0).equals(name)) {
+                        System.out.println("Admin disconnected");
+                        newAdmin = ChatServer.userNames.get(1);
 
-                for (PrintWriter out : ChatServer.printWriters) {
-                    if (ChatServer.userNames.get(0).equals(disconnected)) {
-                        out.println("NEWADMIN" + disconnected + "/" + newAdmin);
+                        for (PrintWriter out : ChatServer.printWriters) {
+                            if (ChatServer.userNames.get(0).equals(disconnected)) {
+                                out.println("NEWADMIN" + disconnected + "/" + newAdmin);
+                            }
+                        }
                     }
-                    Thread offlineThread = new Thread(() -> {
-                        out.println("OFFLINE" + name);
-                    });
-                    offlineThread.start();
-
                 }
-            } else {
-                ChatServer.onlineUsers.remove(name);
-                ChatServer.onlineUsers.remove(name);
+
             }
         }
     }
 
     public static void compareArrays() {
+        broadcast();
         System.out.println("USERNAMES BEFORE: " + ChatServer.userNames);
         System.out.println("ONLINE BEFORE: " + ChatServer.onlineUsers);
 
         String firstElement = "";
-        if (ChatServer.userNames.size() > 0) {
-            firstElement = ChatServer.userNames.get(0);
-            ChatServer.userNames.removeIf(x -> (!ChatServer.onlineUsers.contains(x)));
 
-            if (!firstElement.equals(ChatServer.userNames.get(0))) {
-                for (PrintWriter out : ChatServer.printWriters) {
-                    out.println("NEWADMIN" + firstElement + "/" + ChatServer.userNames.get(0));
+        firstElement = ChatServer.userNames.get(0);
+
+        ChatServer.userNames.removeIf(x -> (!ChatServer.onlineUsers.contains(x)));
+
+            /*if (ChatServer.userNames.size() > 1) {
+                if (!firstElement.equals(ChatServer.userNames.get(0))) {
+                    for (PrintWriter out : ChatServer.printWriters) {
+                        out.println("NEWADMIN" + firstElement + "/" + ChatServer.userNames.get(0));
+                    }
                 }
-            }
+            }*/
 
+        System.out.println("USERNAME AFTER: " + ChatServer.userNames);
+        System.out.println("ONLINE AFTER: " + ChatServer.onlineUsers);
+        //ChatServer.onlineUsers.clear();
 
-            System.out.println("USERNAME AFTER: " + ChatServer.userNames);
-            System.out.println("ONLINE AFTER: " + ChatServer.onlineUsers);
-            ChatServer.onlineUsers.clear();
+        StringBuilder names = new StringBuilder();
+        for (int j = 0; j < ChatServer.userNames.size(); j++) {
+            names.append(ChatServer.userNames.get(j)).append(",");
+        }
+        for (PrintWriter out : ChatServer.printWriters) {
+            out.println("//" + names);
         }
     }
+
 
     public static void broadcast() {
         if (ChatServer.userNames.size() > 0) {
             for (PrintWriter out : ChatServer.printWriters) {
                 out.println("PING");
-                StringBuilder names = new StringBuilder();
-                for (int j = 0; j < ChatServer.userNames.size(); j++) {
-                    names.append(ChatServer.userNames.get(j)).append(",");
-                }
-                out.println("//" + names);
             }
         }
     }

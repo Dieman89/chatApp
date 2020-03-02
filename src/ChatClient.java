@@ -19,6 +19,7 @@ public class ChatClient {
     static BufferedReader in;
     static PrintWriter out;
     static JLabel nameLabel = new JLabel("        ");
+    static JLabel countdownLabel = new JLabel("");
 
     ChatClient() {
         chatWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -41,14 +42,21 @@ public class ChatClient {
         chatPanel.add(new JScrollPane(chatArea), BorderLayout.CENTER);
         chatPanel.add(textPanel, BorderLayout.SOUTH);
 
-        JPanel usersPanel = new JPanel();
+        JPanel usersPanel = new JPanel(new BorderLayout());
         usersPanel.setPreferredSize(new Dimension(100, 600));
         usersPanel.setBackground(new Color(35, 39, 42));
         usersPanel.setForeground(Color.WHITE);
-        usersPanel.add(users);
+        usersPanel.add(users, BorderLayout.CENTER);
         users.setForeground(Color.WHITE);
         users.setBackground(new Color(35, 39, 42));
         users.setOpaque(false);
+
+        countdownLabel.setForeground(Color.WHITE);
+        countdownLabel.setHorizontalAlignment(JLabel.CENTER);
+        countdownLabel.setPreferredSize(new Dimension(100, 30));
+        countdownLabel.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.WHITE));
+        usersPanel.add(countdownLabel, BorderLayout.SOUTH);
+
 
         chatWindow.add(usersPanel, BorderLayout.EAST);
 
@@ -134,6 +142,8 @@ public class ChatClient {
                     chatArea.append(str.substring(7) + " is offline" + "\n");
                     defaultListModel.removeElement(str.substring(7));
                     users.setModel(defaultListModel);
+                } else if (str.startsWith("COUNT")) {
+                    countdownLabel.setText("Update in " + str.substring(5));
                 } else {
                     chatArea.append(str + "\n");
 
