@@ -120,7 +120,7 @@ class ConversationHandler extends Thread {
             if (ChatServer.onlineUsers.size() == 1) {
                 out.println("FIRST");
             }
-            for (PrintWriter out: ChatServer.printWriters) {
+            for (PrintWriter out : ChatServer.printWriters) {
                 out.println(">> [" + name + " is online [IP: " + socket.getInetAddress()
                         + ", PORT: " + socket.getPort() + "] <<");
             }
@@ -130,7 +130,7 @@ class ConversationHandler extends Thread {
                     if (i == 0)
                         out.println("ID: " + ChatServer.userNames.get(i) + "/ IP: " + sockets.get(0).getInetAddress() + ", PORT: " + sockets.get(0).getPort() + " [ADMIN]");
                     else
-                    out.println("ID: " + ChatServer.userNames.get(i) + "/ IP: " + sockets.get(i).getInetAddress() + ", PORT: " + sockets.get(i).getPort());
+                        out.println("ID: " + ChatServer.userNames.get(i) + "/ IP: " + sockets.get(i).getInetAddress() + ", PORT: " + sockets.get(i).getPort());
                 }
             }
             ChatServer.printWriters.add(out);
@@ -157,13 +157,13 @@ class ConversationHandler extends Thread {
         } catch (Exception e) {
             System.out.println("Connection interrupted");
 
-            if (ChatServer.printWriters.size() > 0) {
+            if (ChatServer.userNames.size() > 0) {
                 for (PrintWriter out : ChatServer.printWriters) {
                     System.out.println("I'm in");
                     out.println("OFFLINE" + name);
                 }
                 ChatServer.onlineUsers.remove(name);
-                ChatServer.printWriters.remove(out);
+
                 ChatServer.sockets.remove(socket);
             }
 
@@ -178,13 +178,10 @@ class ConversationHandler extends Thread {
                         newAdmin = ChatServer.userNames.get(1);
 
                         for (PrintWriter out : ChatServer.printWriters) {
-                            if (ChatServer.userNames.get(0).equals(disconnected)) {
-                                out.println("NEWADMIN" + disconnected + "/" + newAdmin);
-                            }
+                            out.println("NEWADMIN" + disconnected + "/" + newAdmin);
                         }
                     }
                 }
-
             }
         }
     }
@@ -194,23 +191,10 @@ class ConversationHandler extends Thread {
         System.out.println("USERNAMES BEFORE: " + ChatServer.userNames);
         System.out.println("ONLINE BEFORE: " + ChatServer.onlineUsers);
 
-        String firstElement = "";
-
-        firstElement = ChatServer.userNames.get(0);
-
         ChatServer.userNames.removeIf(x -> (!ChatServer.onlineUsers.contains(x)));
-
-            /*if (ChatServer.userNames.size() > 1) {
-                if (!firstElement.equals(ChatServer.userNames.get(0))) {
-                    for (PrintWriter out : ChatServer.printWriters) {
-                        out.println("NEWADMIN" + firstElement + "/" + ChatServer.userNames.get(0));
-                    }
-                }
-            }*/
 
         System.out.println("USERNAME AFTER: " + ChatServer.userNames);
         System.out.println("ONLINE AFTER: " + ChatServer.onlineUsers);
-        //ChatServer.onlineUsers.clear();
 
         StringBuilder names = new StringBuilder();
         for (int j = 0; j < ChatServer.userNames.size(); j++) {

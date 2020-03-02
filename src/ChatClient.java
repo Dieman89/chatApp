@@ -185,7 +185,36 @@ public class ChatClient {
 class Listener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
-        ChatClient.out.println(ChatClient.textField.getText());
+        if (ChatClient.textField.getText().startsWith("/")) {
+            switch (ChatClient.textField.getText().substring(1)) {
+                case "clear":
+                    ChatClient.chatArea.setText("");
+                    break;
+                case "help":
+                    ChatClient.chatArea.append("-----------------" + "\n"  + "/help - to access the various list of command " + "\n" +
+                            "/clear - to clear the chat client side /whois - to get information about an user " + "\n" +
+                            "/admin - to give admin to another member " + "\n" +
+                            "/quit - to quit the chat " + "\n" +
+                            "/msg - to send a private message to a member " + "\n" +
+                            "/nickname - to change nickname " + "\n" +
+                            "/away - to set status away " + "\n" +
+                            "/online - to come online after being away " + "\n" +
+                            "/credits - to see application credits and creators " + "\n" +
+                            "/info - to see personal IP and PORT " + "\n" +
+                            "/register - to register your nickname " + "\n" +
+                            "/identify - to identify your previous registered nickname " + "\n" +
+                            "/logs - open logs client side " + "\n" +
+                            "/clearlogs - clear logs client side" + "\n" + "-----------------" + "\n");
+                    break;
+                case "quit":
+                    System.exit(0);
+                    break;
+                default:
+                    ChatClient.chatArea.append("Command not found, type " +
+                            "/help to see all the commands" + "\n");
+                    break;
+            }
+        } else ChatClient.out.println(ChatClient.textField.getText());
         ChatClient.textField.setText("");
     }
 }
