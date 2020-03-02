@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Arrays;
 
 public class ChatClient {
@@ -19,6 +20,8 @@ public class ChatClient {
     static JLabel nameLabel = new JLabel("");
     static JLabel countdownLabel = new JLabel("");
     static JLabel onlineLabel = new JLabel("");
+    static String ipAddress;
+    static String username;
 
     ChatClient() {
         chatWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -87,16 +90,16 @@ public class ChatClient {
 
     void startChat() throws Exception {
 
-        String ipAddress = JOptionPane.showInputDialog(
+        ipAddress = JOptionPane.showInputDialog(
                 chatWindow,
                 "Enter IP Address:",
                 "IP Address Required!",
                 JOptionPane.PLAIN_MESSAGE);
 
         Socket soc = new Socket(ipAddress, 9806);
-
         in = new BufferedReader(new InputStreamReader(soc.getInputStream()));
         out = new PrintWriter(soc.getOutputStream(), true);
+
         Thread newThread = new Thread(() -> {
             while (true) {
                 String str = null;
@@ -107,18 +110,26 @@ public class ChatClient {
                 }
                 assert str != null;
                 if (str.equals("NAMEREQUIRED")) {
-                    String name = JOptionPane.showInputDialog(
-                            chatWindow,
-                            "Enter an unique name:",
-                            "Name required!",
-                            JOptionPane.PLAIN_MESSAGE);
+                    String name = "";
+                    while (name.equals("")) {
+                        name = JOptionPane.showInputDialog(
+                                chatWindow,
+                                "Enter an unique name:",
+                                "Name required!",
+                                JOptionPane.PLAIN_MESSAGE);
+                    }
+                    username = name;
                     out.println(name);
                 } else if (str.equals("NAMEALREADYEXISTS")) {
-                    String name = JOptionPane.showInputDialog(
-                            chatWindow,
-                            "Enter a different name:",
-                            "Name already exists!",
-                            JOptionPane.WARNING_MESSAGE);
+                    String name = "";
+                    while (name.equals("")) {
+                        name = JOptionPane.showInputDialog(
+                                chatWindow,
+                                "Enter a different name:",
+                                "Name already exists!",
+                                JOptionPane.WARNING_MESSAGE);
+                    }
+                    username = name;
                     out.println(name);
                 } else if (str.startsWith("NAMEACCEPTED")) {
                     textField.setEditable(true);
@@ -160,14 +171,21 @@ public class ChatClient {
                 } else if (str.startsWith("COUNT")) {
                     countdownLabel.setText("Update in " + str.substring(5));
                 } else if (str.startsWith("SIZE")) {
-                    onlineLabel.setText("Online: " + str.substring(4));
+                    onlineLabel.setText("Online: " + str.substring(4) + "/ 20");
                     System.out.println("Total users: " + str.substring(4));
+                } else if (str.startsWith("FULL")) {
+                    String[] options = {"Exit"};
+                    int select = JOptionPane.showOptionDialog(chatWindow, "What do you want to do?", "Server is full", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+                    if (select == 0) {
+                        System.exit(0);
+                    }
                 } else {
                     chatArea.append(str + "\n");
                 }
             }
         });
         newThread.start();
+
     }
 
     public static void main(String[] args) {
@@ -186,33 +204,34 @@ class Listener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (ChatClient.textField.getText().startsWith("/")) {
-            switch (ChatClient.textField.getText().substring(1)) {
-                case "clear":
-                    ChatClient.chatArea.setText("");
-                    break;
-                case "help":
-                    ChatClient.chatArea.append("-----------------" + "\n"  + "/help - to access the various list of command " + "\n" +
-                            "/clear - to clear the chat client side /whois - to get information about an user " + "\n" +
-                            "/admin - to give admin to another member " + "\n" +
-                            "/quit - to quit the chat " + "\n" +
-                            "/msg - to send a private message to a member " + "\n" +
-                            "/nickname - to change nickname " + "\n" +
-                            "/away - to set status away " + "\n" +
-                            "/online - to come online after being away " + "\n" +
-                            "/credits - to see application credits and creators " + "\n" +
-                            "/info - to see personal IP and PORT " + "\n" +
-                            "/register - to register your nickname " + "\n" +
-                            "/identify - to identify your previous registered nickname " + "\n" +
-                            "/logs - open logs client side " + "\n" +
-                            "/clearlogs - clear logs client side" + "\n" + "-----------------" + "\n");
-                    break;
-                case "quit":
-                    System.exit(0);
-                    break;
-                default:
-                    ChatClient.chatArea.append("Command not found, type " +
+            if (ChatClient.textField.getText().substring(1).equals("clear")) {
+                ChatClient.chatArea.setText("");
+            }
+            else if (ChatClient.textField.getText().substring(1).equals("help")) {
+
+                ChatClient.chatArea.append("-----------------" + "\n" + "/help - to access the various list of command " + "\n" +
+                        "/clear - to clear the chat client side /whois - to get information about an user " + "\n" +
+                        "/admin - to give admin to another member " + "\n" +
+                        "/quit - to quit the chat " + "\n" +
+                        "/msg - to send a private message to a member " + "\n" +
+                        "/nickname - to change nickname " + "\n" +
+                        "/away - to set status away " + "\n" +
+                        "/online - to come online after being away " + "\n" +
+                        "/credits - to see application credits and creators " + "\n" +
+                        "/info - to see personal IP and PORT " + "\n" +
+                        "/register - to register your nickname " + "\n" +
+                        "/identify - to identify your previous registereld nickname " + "\n" +
+                        "/logs - open logs client side " + "\n" +
+                        "/clearlogs - clear logs client side" + "\n" + "-----------------" + "\n");
+            } else if (ChatClient.textField.getText().substring(1).equals("quit")) {
+                System.exit(0);
+            } else if (ChatClient.textField.getText().substring(1).startsWith("whois")) {
+                String[] param = ChatClient.textField.getText().substring(1).split(" ");
+                System.out.println(param[1]);
+                ChatClient.out.println("WHOIS" + param[1] + "/" + ChatClient.nameLabel.getText().substring(22));
+            } else {
+                ChatClient.chatArea.append("Command not found, type " +
                             "/help to see all the commands" + "\n");
-                    break;
             }
         } else ChatClient.out.println(ChatClient.textField.getText());
         ChatClient.textField.setText("");
