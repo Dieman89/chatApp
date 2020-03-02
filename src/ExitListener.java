@@ -9,14 +9,15 @@ public class ExitListener implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_C) {
-            System.out.println("pressed");
-        }
+
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_C) {
+            System.out.println("pressed");
+            System.exit(0);
+        }
     }
 
     @Override
