@@ -1,6 +1,7 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Array;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ public class ChatServer {
     static ArrayList<String> userNames = new ArrayList<String>();
     static ArrayList<PrintWriter> printWriters = new ArrayList<PrintWriter>();
     static ArrayList<String> onlineUsers = new ArrayList<>();
+    static ArrayList<Socket> sockets = new ArrayList<>();
     static int seconds = 5;
 
     public static void main(String[] args) {
@@ -43,7 +45,8 @@ public class ChatServer {
                 Socket soc;
                 soc = ss.accept();
                 System.out.println("Connection Established");
-                ConversationHandler handler = new ConversationHandler(soc);
+                sockets.add(soc);
+                ConversationHandler handler = new ConversationHandler(soc, sockets);
                 handler.start();
             }
 
@@ -58,6 +61,7 @@ public class ChatServer {
 }
 
 class ConversationHandler extends Thread {
+    ArrayList<Socket> sockets;
     Socket socket;
     BufferedReader in;
     static PrintWriter out;
@@ -67,8 +71,9 @@ class ConversationHandler extends Thread {
     static FileWriter fw;
     static BufferedWriter bw;
 
-    public ConversationHandler(Socket socket) throws IOException {
+    public ConversationHandler(Socket socket, ArrayList<Socket> sockets) throws IOException {
         this.socket = socket;
+        this.sockets = sockets;
         fw = new FileWriter("src/logs.txt", true); //true means append
         bw = new BufferedWriter(fw); // write entire string at the time to a file
         pw = new PrintWriter(bw, true);
@@ -119,6 +124,15 @@ class ConversationHandler extends Thread {
                 out.println(">> [" + name + " is online [IP: " + socket.getInetAddress()
                         + ", PORT: " + socket.getPort() + "] <<");
             }
+
+            if (ChatServer.userNames.size() > 1) {
+                for (int i = 0; i < ChatServer.userNames.size(); i++) {
+                    if (i == 0)
+                        out.println("ID: " + ChatServer.userNames.get(i) + "/ IP: " + sockets.get(0).getInetAddress() + ", PORT: " + sockets.get(0).getPort() + " [ADMIN]");
+                    else
+                    out.println("ID: " + ChatServer.userNames.get(i) + "/ IP: " + sockets.get(i).getInetAddress() + ", PORT: " + sockets.get(i).getPort());
+                }
+            }
             ChatServer.printWriters.add(out);
 
             while (true) { //read all the messages
@@ -149,6 +163,8 @@ class ConversationHandler extends Thread {
                     out.println("OFFLINE" + name);
                 }
                 ChatServer.onlineUsers.remove(name);
+                ChatServer.printWriters.remove(out);
+                ChatServer.sockets.remove(socket);
             }
 
 

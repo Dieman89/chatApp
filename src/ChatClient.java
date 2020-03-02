@@ -23,6 +23,10 @@ public class ChatClient {
     ChatClient() {
         chatWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        chatArea.addKeyListener(new ExitListener());
+        textField.addKeyListener(new ExitListener());
+        users.addKeyListener(new ExitListener());
+
         chatWindow.setSize(new Dimension(700, 600));
 
         JPanel chatPanel = new JPanel(new BorderLayout());
@@ -61,7 +65,7 @@ public class ChatClient {
         onlineLabel.setForeground(Color.WHITE);
         onlineLabel.setPreferredSize(new Dimension(100, 20));
         onlineLabel.setHorizontalAlignment(JLabel.CENTER);
-        onlineLabel.setBorder(BorderFactory.createMatteBorder(0, 0,1,0, Color.WHITE));
+        onlineLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
         usersPanel.add(onlineLabel, BorderLayout.NORTH);
 
 
@@ -128,6 +132,7 @@ public class ChatClient {
                         System.out.println(name + "IS SENDING A PONG");
                     });
                     pingThread.start();
+
                 } else if (str.startsWith("//")) {
                     String finalStr = str;
                     Thread listThread = new Thread(() -> {
