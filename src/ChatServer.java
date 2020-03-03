@@ -5,6 +5,7 @@ import java.net.SocketException;
 import java.sql.Array;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ChatServer {
 
@@ -106,7 +107,7 @@ class ConversationHandler extends Thread {
                 }
 
                 // DO NOT MODIFY THIS CODE
-                if (ChatServer.userNames.size() <= 1) {
+                if (ChatServer.userNames.size() <= 19) {
                     if (!ChatServer.userNames.contains(name)) {
                         ChatServer.userNames.add(name);
                         if (!ChatServer.onlineUsers.contains(name)) {
@@ -156,20 +157,44 @@ class ConversationHandler extends Thread {
                         System.out.println("Adding: " + nickname + " to online list");
                     }
 
-                } else if (message.startsWith("WHOIS")) {
+                }
+
+                else if (message.startsWith("WHISPER")) {
                     String[] arrays = message.split("/");
-                    int destination = ChatServer.userNames.indexOf(arrays[1]);
-                    System.out.println(arrays[0] + "///" + arrays[1]);
-                    if (ChatServer.userNames.contains(arrays[0].substring(5))) {
-                        int target = ChatServer.userNames.indexOf(arrays[0].substring(5));
+                    System.out.println(Arrays.toString(arrays));
 
+                    int targetMsg = ChatServer.userNames.indexOf(arrays[2]);
+                    int sender = ChatServer.userNames.indexOf(arrays[1]);
+                    String msg = arrays[3];
 
+                    if (ChatServer.userNames.contains(arrays[2])) {
                         for (int i = 0; i < ChatServer.printWriters.size(); i++) {
-                            if (i == destination)
-                                ChatServer.printWriters.get(destination).println("ID " + ChatServer.userNames.get(target) + ", IP: " + ChatServer.sockets.get(target).getInetAddress() + ", PORT: " + ChatServer.sockets.get(target).getPort());
+                            if (i == targetMsg || i == sender) {
+                                ChatServer.printWriters.get(i).println("(whisper) " + ChatServer.userNames.get(sender) + ": " + msg);
+                            }
                         }
+                    } else {
+                        ChatServer.printWriters.get(sender).println("User not found");
+                    }
+                }
+
+
+
+                else if (message.startsWith("WHOIS")) {
+                    String[] arrays = message.substring(5).split("/");
+                    int destination = ChatServer.userNames.indexOf(arrays[0]);
+                    int target = ChatServer.userNames.indexOf(arrays[1]);
+
+                    System.out.println(Arrays.toString(arrays));
+                    if (ChatServer.userNames.contains(arrays[1])) {
+                        ChatServer.printWriters.get(destination).println("ID " + ChatServer.userNames.get(target) + ", IP: " + ChatServer.sockets.get(target).getInetAddress() + ", PORT: " + ChatServer.sockets.get(target).getPort());
                     } else ChatServer.printWriters.get(destination).println("User not found");
-                } else if (!message.equals("")) {
+                }
+
+
+
+
+                else if (!message.equals("")) {
 
                     pw.println("[" + new Timestamp(System.currentTimeMillis()).toString() + "]" + " " + name + ": " + message);
 

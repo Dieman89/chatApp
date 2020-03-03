@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e7bdd69f-8e13-4120-8cbd-36b473c5a8e8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Tommaso_Bruno.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Tommaso_Bruno.xml" afterDir="false" />
+    <list default="true" id="e7bdd69f-8e13-4120-8cbd-36b473c5a8e8" name="Default Changelist" comment="First Commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatServer.java" afterDir="false" />
@@ -48,8 +47,8 @@
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/images" />
-    <property name="project.structure.last.edited" value="Global Libraries" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -68,7 +67,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.ChatClient">
-    <configuration name="ChatClient" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
+    <configuration name="ChatClient" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ChatClient" />
       <module name="Chat" />
       <method v="2">
@@ -88,7 +87,6 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ChatClient" />
         <item itemvalue="Application.ChatServer" />
       </list>
     </recent_temporary>
@@ -136,9 +134,15 @@
     <option name="LAST_COMMIT_MESSAGE" value="First Commit" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="184" y="123" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1582929843310">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state x="447" y="127" key="#Project_Structure" timestamp="1583245730582">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="447" y="127" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1583245730582" />
+    <state x="335" y="130" key="#Project_Structure/0.23.1440.877@0.23.1440.877" timestamp="1583222591191" />
+    <state x="245" y="119" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1583246455464">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="245" y="119" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583246455464" />
     <state x="184" y="123" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.877@0.23.1440.877" timestamp="1582929843310" />
     <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser" timestamp="1583152569798">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -152,30 +156,31 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="432" y="152" key="#com.intellij.refactoring.encapsulateFields.EncalpsulateFieldsDialog/0.23.1440.877@0.23.1440.877" timestamp="1582975672982" />
-    <state x="344" y="53" key="CommitChangelistDialog2" timestamp="1582919691058">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state x="459" y="36" key="CommitChangelistDialog2" timestamp="1583246411615">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
+    <state x="459" y="36" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1583246411615" />
     <state x="344" y="53" key="CommitChangelistDialog2/0.23.1440.877@0.23.1440.877" timestamp="1582919691058" />
-    <state width="1877" height="272" key="GridCell.Tab.0.bottom" timestamp="1583179138392">
+    <state width="1877" height="272" key="GridCell.Tab.0.bottom" timestamp="1583249387916">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="272" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583179138392" />
-    <state width="1419" height="230" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1582982451648" />
-    <state width="1877" height="272" key="GridCell.Tab.0.center" timestamp="1583179138391">
+    <state width="1877" height="272" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583249387916" />
+    <state width="1419" height="230" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1583229115604" />
+    <state width="1877" height="272" key="GridCell.Tab.0.center" timestamp="1583249387916">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="272" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583179138391" />
-    <state width="1419" height="230" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1582982451647" />
-    <state width="1877" height="272" key="GridCell.Tab.0.left" timestamp="1583179138391">
+    <state width="1877" height="272" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583249387916" />
+    <state width="1419" height="230" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1583229115603" />
+    <state width="1877" height="272" key="GridCell.Tab.0.left" timestamp="1583249387916">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="272" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583179138391" />
-    <state width="1419" height="230" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1582982451647" />
-    <state width="1877" height="272" key="GridCell.Tab.0.right" timestamp="1583179138391">
+    <state width="1877" height="272" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583249387916" />
+    <state width="1419" height="230" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1583229115603" />
+    <state width="1877" height="272" key="GridCell.Tab.0.right" timestamp="1583249387916">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="272" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583179138391" />
-    <state width="1419" height="230" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1582982451648" />
+    <state width="1877" height="272" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583249387916" />
+    <state width="1419" height="230" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1583229115604" />
     <state width="1877" height="346" key="GridCell.Tab.1.bottom" timestamp="1583176222309">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -221,14 +226,18 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="534" y="270" key="Vcs.Push.Dialog.v2/0.23.1440.877@0.23.1440.877" timestamp="1582920553096" />
-    <state x="397" y="294" key="com.intellij.ide.util.TipDialog" timestamp="1582915784129">
+    <state x="397" y="294" key="com.intellij.ide.util.TipDialog" timestamp="1583226493737">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="397" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1582915784129" />
+    <state x="397" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1583226493737" />
     <state x="288" y="204" width="863" height="590" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1582978373243">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="288" y="204" width="863" height="590" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/0.23.1440.877@0.23.1440.877" timestamp="1582978373243" />
+    <state x="690" y="275" width="540" height="496" key="extract.method.dialog" timestamp="1583248739862">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="275" width="540" height="496" key="extract.method.dialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583248739862" />
     <state x="513" y="223" key="run.anything.popup" timestamp="1583170621091">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

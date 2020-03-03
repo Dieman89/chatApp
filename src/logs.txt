@@ -81,3 +81,7 @@
 [2020-03-02 19:34:38.232] : Tommaso
 [2020-03-02 19:40:10.076] Tommaso: dssd
 [2020-03-02 19:46:34.447] Tommaso: fd
+[2020-03-03 15:09:51.684] Intruder: popsod
+[2020-03-03 15:10:18.827] Tommaso: whois Intruder
+[2020-03-03 15:13:42.907] Dieman: /Dieman
+[2020-03-03 15:13:46.73] Dieman: /Dieman

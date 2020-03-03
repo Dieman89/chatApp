@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.Arrays;
 
 public class ChatClient {
@@ -171,6 +170,7 @@ public class ChatClient {
                 } else if (str.startsWith("COUNT")) {
                     countdownLabel.setText("Update in " + str.substring(5));
                 } else if (str.startsWith("SIZE")) {
+
                     onlineLabel.setText("Online: " + str.substring(4) + "/ 20");
                     System.out.println("Total users: " + str.substring(4));
                 } else if (str.startsWith("FULL")) {
@@ -206,8 +206,7 @@ class Listener implements ActionListener {
         if (ChatClient.textField.getText().startsWith("/")) {
             if (ChatClient.textField.getText().substring(1).equals("clear")) {
                 ChatClient.chatArea.setText("");
-            }
-            else if (ChatClient.textField.getText().substring(1).equals("help")) {
+            } else if (ChatClient.textField.getText().substring(1).equals("help")) {
 
                 ChatClient.chatArea.append("-----------------" + "\n" + "/help - to access the various list of command " + "\n" +
                         "/clear - to clear the chat client side /whois - to get information about an user " + "\n" +
@@ -223,15 +222,38 @@ class Listener implements ActionListener {
                         "/identify - to identify your previous registereld nickname " + "\n" +
                         "/logs - open logs client side " + "\n" +
                         "/clearlogs - clear logs client side" + "\n" + "-----------------" + "\n");
-            } else if (ChatClient.textField.getText().substring(1).equals("quit")) {
+            }
+
+
+
+            else if (ChatClient.textField.getText().substring(1).equals("quit")) {
                 System.exit(0);
-            } else if (ChatClient.textField.getText().substring(1).startsWith("whois")) {
-                String[] param = ChatClient.textField.getText().substring(1).split(" ");
-                System.out.println(param[1]);
-                ChatClient.out.println("WHOIS" + param[1] + "/" + ChatClient.nameLabel.getText().substring(22));
+            }
+
+
+
+
+            else if (ChatClient.textField.getText().substring(1).startsWith("whois")) {
+                String param = ChatClient.textField.getText().substring(7);
+                System.out.println(param);
+                ChatClient.out.println("WHOIS" + ChatClient.nameLabel.getText().substring(22).split("\n")[0] + "/" + param);
+            }
+
+
+
+            else if (ChatClient.textField.getText().substring(1).startsWith("msg")) {
+                String[] param = ChatClient.textField.getText().substring(5).split(" ");
+                if (param[1].equals(ChatClient.nameLabel.getText().substring(22).split("\n")[0])) {
+                    ChatClient.chatArea.append(" > You can't send a message to yourself." + "\n");
+                } else {
+                    param[1] = ChatClient.textField.getText().substring(7 + param[0].length()-1);
+                    System.out.println(param[0] + " " + param[1]);
+                    ChatClient.out.println("WHISPER" + "/" + ChatClient.nameLabel.getText().substring(22).split("\n")[0] + "/" + param[0] + "/" + param[1]);
+                    //System.out.println(ChatClient.nameLabel.getText().substring(22) + " is sending a message to " + param[1] + ". Message is: " + param[2]);
+                }
             } else {
                 ChatClient.chatArea.append("Command not found, type " +
-                            "/help to see all the commands" + "\n");
+                        "/help to see all the commands" + "\n");
             }
         } else ChatClient.out.println(ChatClient.textField.getText());
         ChatClient.textField.setText("");
