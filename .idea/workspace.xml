@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7bdd69f-8e13-4120-8cbd-36b473c5a8e8" name="Default Changelist" comment="First Commit">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/logs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/logs.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,8 +49,8 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
@@ -64,7 +67,7 @@
       <recent name="C:\Users\44784\Desktop\chatApp\chatApp\images" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ChatServer">
+  <component name="RunManager" selected="Application.ChatClient">
     <configuration name="ChatClient" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ChatClient" />
       <module name="Chat" />
@@ -132,11 +135,11 @@
     <option name="LAST_COMMIT_MESSAGE" value="First Commit" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="335" y="130" key="#Project_Structure" timestamp="1583267681804">
+    <state x="335" y="130" key="#Project_Structure" timestamp="1583268450053">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="447" y="127" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1583245730582" />
-    <state x="335" y="130" key="#Project_Structure/0.23.1440.877@0.23.1440.877" timestamp="1583267681804" />
+    <state x="335" y="130" key="#Project_Structure/0.23.1440.877@0.23.1440.877" timestamp="1583268450053" />
     <state x="245" y="119" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1583246455464">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -150,6 +153,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="808" y="409" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1582984308610" />
+    <state x="408" y="196" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1583268489466">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="408" y="196" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.23.1440.877@0.23.1440.877" timestamp="1583268489466" />
     <state x="432" y="152" key="#com.intellij.refactoring.encapsulateFields.EncalpsulateFieldsDialog" timestamp="1582975672982">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -159,26 +166,26 @@
     </state>
     <state x="459" y="36" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1583246411615" />
     <state x="344" y="53" key="CommitChangelistDialog2/0.23.1440.877@0.23.1440.877" timestamp="1582919691058" />
-    <state width="1877" height="272" key="GridCell.Tab.0.bottom" timestamp="1583255898882">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1419" height="230" key="GridCell.Tab.0.bottom" timestamp="1583271987314">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="272" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583255898882" />
-    <state width="1419" height="230" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1583229115604" />
-    <state width="1877" height="272" key="GridCell.Tab.0.center" timestamp="1583255898882">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1419" height="230" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1583271987314" />
+    <state width="1419" height="230" key="GridCell.Tab.0.center" timestamp="1583271987313">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="272" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583255898882" />
-    <state width="1419" height="230" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1583229115603" />
-    <state width="1877" height="272" key="GridCell.Tab.0.left" timestamp="1583255898881">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1419" height="230" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1583271987313" />
+    <state width="1419" height="230" key="GridCell.Tab.0.left" timestamp="1583271987311">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="272" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583255898881" />
-    <state width="1419" height="230" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1583229115603" />
-    <state width="1877" height="272" key="GridCell.Tab.0.right" timestamp="1583255898882">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1419" height="230" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1583271987311" />
+    <state width="1419" height="230" key="GridCell.Tab.0.right" timestamp="1583271987313">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1877" height="272" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583255898882" />
-    <state width="1419" height="230" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1583229115604" />
+    <state width="1419" height="230" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1583271987313" />
     <state width="1877" height="346" key="GridCell.Tab.1.bottom" timestamp="1583176222309">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -215,19 +222,19 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1419" height="285" key="GridCell.Tab.2.right/0.23.1440.877@0.23.1440.877" timestamp="1582978387534" />
-    <state x="555" y="47" key="SettingsEditor" timestamp="1583020272828">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="378" y="63" key="SettingsEditor" timestamp="1583270397338">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="555" y="47" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1583020272828" />
-    <state x="416" y="63" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1582922864626" />
+    <state x="378" y="63" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1583270397338" />
     <state x="534" y="270" key="Vcs.Push.Dialog.v2" timestamp="1582920553096">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="534" y="270" key="Vcs.Push.Dialog.v2/0.23.1440.877@0.23.1440.877" timestamp="1582920553096" />
-    <state x="397" y="294" key="com.intellij.ide.util.TipDialog" timestamp="1583226493737">
+    <state x="397" y="294" key="com.intellij.ide.util.TipDialog" timestamp="1583270784699">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="397" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1583226493737" />
+    <state x="397" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1583270784699" />
     <state x="288" y="204" width="863" height="590" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1582978373243">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -241,11 +248,11 @@
     </state>
     <state x="513" y="223" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1583170621091" />
     <state x="385" y="211" key="run.anything.popup/0.23.1440.877@0.23.1440.877" timestamp="1582922778058" />
-    <state x="513" y="225" width="894" height="802" key="search.everywhere.popup" timestamp="1583106788486">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="385" y="213" width="670" height="676" key="search.everywhere.popup" timestamp="1583271837466">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="513" y="225" width="894" height="802" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1583106788486" />
-    <state x="385" y="213" width="670" height="676" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1582974675497" />
+    <state x="385" y="213" width="670" height="676" key="search.everywhere.popup/0.23.1440.877@0.23.1440.877" timestamp="1583271837466" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>

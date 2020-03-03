@@ -2,11 +2,9 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.sql.Array;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.function.UnaryOperator;
 
 public class ChatServer {
 
@@ -67,15 +65,14 @@ public class ChatServer {
 }
 
 class ConversationHandler extends Thread {
+    static PrintWriter out;
+    static FileWriter fw;
+    static BufferedWriter bw;
     ArrayList<Socket> sockets;
     Socket socket;
     BufferedReader in;
-    static PrintWriter out;
-
     //for logs under
     PrintWriter pw;
-    static FileWriter fw;
-    static BufferedWriter bw;
     String name;
 
     public ConversationHandler(Socket socket, ArrayList<Socket> sockets, String name) throws IOException {
@@ -90,6 +87,37 @@ class ConversationHandler extends Thread {
     public static void sendCount(int seconds) {
         for (PrintWriter out : ChatServer.printWriters) {
             out.println("COUNT" + seconds);
+        }
+    }
+
+    public static void compareArrays() {
+        broadcast();
+        System.out.println("USERNAMES BEFORE: " + ChatServer.userNames);
+        System.out.println("ONLINE BEFORE: " + ChatServer.onlineUsers);
+
+        ChatServer.userNames.removeIf(x -> (!ChatServer.onlineUsers.contains(x)));
+
+        System.out.println("USERNAME AFTER: " + ChatServer.userNames);
+        System.out.println("ONLINE AFTER: " + ChatServer.onlineUsers);
+
+        StringBuilder names = new StringBuilder();
+        for (int j = 0; j < ChatServer.userNames.size(); j++) {
+            names.append(ChatServer.userNames.get(j)).append(",");
+        }
+        for (PrintWriter out : ChatServer.printWriters) {
+            out.println("//" + names);
+
+        }
+        for (PrintWriter out : ChatServer.printWriters) {
+            out.println("SIZE" + ChatServer.userNames.size());
+        }
+    }
+
+    public static void broadcast() {
+        if (ChatServer.userNames.size() > 0) {
+            for (PrintWriter out : ChatServer.printWriters) {
+                out.println("PING");
+            }
         }
     }
 
@@ -262,38 +290,6 @@ class ConversationHandler extends Thread {
                     ChatServer.printWriters.remove(index);
                     System.out.println(ChatServer.printWriters);
                 }
-            }
-        }
-    }
-
-    public static void compareArrays() {
-        broadcast();
-        System.out.println("USERNAMES BEFORE: " + ChatServer.userNames);
-        System.out.println("ONLINE BEFORE: " + ChatServer.onlineUsers);
-
-        ChatServer.userNames.removeIf(x -> (!ChatServer.onlineUsers.contains(x)));
-
-        System.out.println("USERNAME AFTER: " + ChatServer.userNames);
-        System.out.println("ONLINE AFTER: " + ChatServer.onlineUsers);
-
-        StringBuilder names = new StringBuilder();
-        for (int j = 0; j < ChatServer.userNames.size(); j++) {
-            names.append(ChatServer.userNames.get(j)).append(",");
-        }
-        for (PrintWriter out : ChatServer.printWriters) {
-            out.println("//" + names);
-
-        }
-        for (PrintWriter out : ChatServer.printWriters) {
-            out.println("SIZE" + ChatServer.userNames.size());
-        }
-    }
-
-
-    public static void broadcast() {
-        if (ChatServer.userNames.size() > 0) {
-            for (PrintWriter out : ChatServer.printWriters) {
-                out.println("PING");
             }
         }
     }
