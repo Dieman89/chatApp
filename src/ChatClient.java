@@ -257,7 +257,12 @@ class Listener implements ActionListener {
                         "/clearlogs - clear logs client side" + "\n" + "-----------------" + "\n");
             } else if (ChatClient.textField.getText().substring(1).equals("quit")) {
                 System.exit(0);
-            } else if (ChatClient.textField.getText().substring(1).startsWith("whois")) {
+            } else if (ChatClient.textField.getText().substring(1).equals("credits")) {
+                ChatClient.chatArea.append
+                        ("Chat Application built as a project for the University of Greenwich" +
+                        "");
+            }
+        } else if (ChatClient.textField.getText().substring(1).startsWith("whois")) {
                 String param = ChatClient.textField.getText().substring(7);
                 System.out.println(param);
                 ChatClient.out.println("WHOIS" + ChatClient.nameLabel.getText().substring(22).split("\n")[0] + "/" + param);

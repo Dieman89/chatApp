@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e7bdd69f-8e13-4120-8cbd-36b473c5a8e8" name="Default Changelist" comment="First Commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,7 +64,7 @@
       <recent name="C:\Users\44784\Desktop\chatApp\chatApp\images" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ChatClient">
+  <component name="RunManager" selected="Application.ChatServer">
     <configuration name="ChatClient" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ChatClient" />
       <module name="Chat" />
@@ -131,11 +132,11 @@
     <option name="LAST_COMMIT_MESSAGE" value="First Commit" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="447" y="127" key="#Project_Structure" timestamp="1583245730582">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="335" y="130" key="#Project_Structure" timestamp="1583267681804">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="447" y="127" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1583245730582" />
-    <state x="335" y="130" key="#Project_Structure/0.23.1440.877@0.23.1440.877" timestamp="1583222591191" />
+    <state x="335" y="130" key="#Project_Structure/0.23.1440.877@0.23.1440.877" timestamp="1583267681804" />
     <state x="245" y="119" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1583246455464">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
