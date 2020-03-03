@@ -3,6 +3,8 @@
     <words>
       <w>aset</w>
       <w>clearlogs</w>
+      <w>namealreadyexists</w>
+      <w>nickchange</w>
     </words>
   </dictionary>
 </component>

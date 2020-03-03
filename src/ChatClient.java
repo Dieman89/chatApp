@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
-import java.nio.file.Path;
 import java.util.Arrays;
 
 public class ChatClient {
@@ -94,7 +93,6 @@ public class ChatClient {
         }
 
         //chatArea.setFont(new Font("/fonts/Avenir.ttf", Font.BOLD, 13));
-
 
 
         sendButton.addActionListener(new Listener());
@@ -193,7 +191,22 @@ public class ChatClient {
                     if (select == 0) {
                         System.exit(0);
                     }
-                } else {
+                } else if(str.startsWith("NICKUPDATED")) {
+                    ChatClient.nameLabel.setText("You are logged in as: " + str.substring(11).split("/")[0] + "\n");
+                    ChatClient.chatArea.append(">> [Your nickname is now: " + str.substring(11).split("/")[0] + "] << " + "\n");
+                    int index = defaultListModel.indexOf(str.substring(11).split("/")[1]);
+                    defaultListModel.setElementAt(str.substring(11).split("/")[1], index);
+                    users.setModel(defaultListModel);
+
+                } else if (str.startsWith("NICKNAME")) {
+                    String[] params = str.substring(8).split("/");
+
+                    String previous = params[1];
+                    String newName = params[0];
+
+                    ChatClient.chatArea.append(">> [" + previous + " has changed its nickname to: " + newName + "] <<" + "\n");
+                }
+                    else{
                     chatArea.append(str + "\n");
                 }
             }
@@ -242,36 +255,29 @@ class Listener implements ActionListener {
                         "/identify - to identify your previous registereld nickname " + "\n" +
                         "/logs - open logs client side " + "\n" +
                         "/clearlogs - clear logs client side" + "\n" + "-----------------" + "\n");
-            }
-
-
-
-            else if (ChatClient.textField.getText().substring(1).equals("quit")) {
+            } else if (ChatClient.textField.getText().substring(1).equals("quit")) {
                 System.exit(0);
-            }
-
-
-
-
-            else if (ChatClient.textField.getText().substring(1).startsWith("whois")) {
+            } else if (ChatClient.textField.getText().substring(1).startsWith("whois")) {
                 String param = ChatClient.textField.getText().substring(7);
                 System.out.println(param);
                 ChatClient.out.println("WHOIS" + ChatClient.nameLabel.getText().substring(22).split("\n")[0] + "/" + param);
-            }
-
-
-
-            else if (ChatClient.textField.getText().substring(1).startsWith("msg")) {
+            } else if (ChatClient.textField.getText().substring(1).startsWith("msg")) {
                 String[] param = ChatClient.textField.getText().substring(5).split(" ");
                 if (param[1].equals(ChatClient.nameLabel.getText().substring(22).split("\n")[0])) {
                     ChatClient.chatArea.append(" > You can't send a message to yourself." + "\n");
                 } else {
-                    param[1] = ChatClient.textField.getText().substring(7 + param[0].length()-1);
+                    param[1] = ChatClient.textField.getText().substring(7 + param[0].length() - 1);
                     System.out.println(param[0] + " " + param[1]);
                     ChatClient.out.println("WHISPER" + "/" + ChatClient.nameLabel.getText().substring(22).split("\n")[0] + "/" + param[0] + "/" + param[1]);
                     //System.out.println(ChatClient.nameLabel.getText().substring(22) + " is sending a message to " + param[1] + ". Message is: " + param[2]);
                 }
-            } else {
+            } else if (ChatClient.textField.getText().substring(1).startsWith("nickname")) {
+                String param = ChatClient.textField.getText().substring(10);
+                System.out.println(param);
+
+                ChatClient.out.println("NICKCHANGE" + param + "/" + ChatClient.nameLabel.getText().substring(22).split("\n")[0]);
+            }
+            else {
                 ChatClient.chatArea.append("Command not found, type " +
                         "/help to see all the commands" + "\n");
             }
