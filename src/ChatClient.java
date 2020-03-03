@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 public class ChatClient {
@@ -22,7 +23,7 @@ public class ChatClient {
     static String ipAddress;
     static String username;
 
-    ChatClient() {
+    ChatClient() throws IOException, FontFormatException {
         chatWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         chatArea.addKeyListener(new ExitListener());
@@ -79,9 +80,22 @@ public class ChatClient {
         chatWindow.setLocationRelativeTo(null);
         chatArea.setEditable(false);
 
-        chatArea.setFont(new Font("/fonts/Arventa.tff", Font.BOLD, 13));
-        onlineLabel.setFont(new Font("/fonts/Myriad.tff", Font.ITALIC, 11));
-        users.setFont(new Font("/fonts/SansPro.tff", Font.PLAIN, 13));
+        try {
+            //create the font to use. Specify the size!
+            Font customFont = Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Avenir.ttf")).deriveFont(13f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            //register the font
+            ge.registerFont(customFont);
+            chatArea.setFont(customFont);
+            onlineLabel.setFont(customFont);
+            users.setFont(customFont);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+
+        //chatArea.setFont(new Font("/fonts/Avenir.ttf", Font.BOLD, 13));
+
+
 
         sendButton.addActionListener(new Listener());
         textField.addActionListener(new Listener());
@@ -190,8 +204,14 @@ public class ChatClient {
 
     public static void main(String[] args) {
 
-        ChatClient client = new ChatClient();
+        ChatClient client = null;
         try {
+            client = new ChatClient();
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+        try {
+            assert client != null;
             client.startChat();
         } catch (Exception e) {
             e.printStackTrace();
