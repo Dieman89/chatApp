@@ -22,7 +22,7 @@ public class ChatClient {
     static String username;
     DefaultListModel<String> defaultListModel = new DefaultListModel<>();
 
-    ChatClient() throws IOException, FontFormatException {
+    ChatClient() {
         chatWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         chatArea.addKeyListener(new ExitListener());
@@ -101,14 +101,9 @@ public class ChatClient {
 
     public static void main(String[] args) {
 
-        ChatClient client = null;
+        ChatClient client;
+        client = new ChatClient();
         try {
-            client = new ChatClient();
-        } catch (IOException | FontFormatException e) {
-            e.printStackTrace();
-        }
-        try {
-            assert client != null;
             client.startChat();
         } catch (Exception e) {
             e.printStackTrace();
@@ -209,7 +204,7 @@ public class ChatClient {
                         System.exit(0);
                     }
                 } else if (str.startsWith("NICKUPDATED")) {
-                    ChatClient.nameLabel.setText("You are logged in as: " + str.substring(11).split("/")[0] + "\n");
+                    ChatClient.nameLabel.setText(">> [You are logged in as: " + str.substring(11).split("/")[0] + "] <<" + "\n");
                     ChatClient.chatArea.append(">> [Your nickname is now: " + str.substring(11).split("/")[0] + "] << " + "\n");
                     int index = defaultListModel.indexOf(str.substring(11).split("/")[1]);
                     defaultListModel.setElementAt(str.substring(11).split("/")[1], index);
@@ -222,7 +217,23 @@ public class ChatClient {
                     String newName = params[0];
 
                     ChatClient.chatArea.append(">> [" + previous + " has changed its nickname to: " + newName + "] <<" + "\n");
-                } else {
+                } else if (str.startsWith("BACKONLINE")) {
+                    int index = defaultListModel.indexOf(str.substring(10) + "(A)");
+                    if (index == -1) {
+                        index = defaultListModel.indexOf("@" + str.substring(10) + "(A)");
+                        defaultListModel.setElementAt("@" + str.substring(10), index);
+                    } else defaultListModel.setElementAt(str.substring(10), index);
+                    users.setModel(defaultListModel);
+                    chatArea.append(">> [" + str.substring(10) + " is now back from being away] <<" + "\n");
+                } else if (str.startsWith("AFK")) {
+                    int index = defaultListModel.indexOf(str.substring(3));
+                    if (index == -1) {
+                        index = defaultListModel.indexOf("@" + str.substring(3));
+                        defaultListModel.setElementAt("@" + str.substring(3) + "(A)", index);
+                    } else defaultListModel.setElementAt(str.substring(3) + "(A)", index);
+                    users.setModel(defaultListModel);
+                }
+                else {
                     chatArea.append(str + "\n");
                 }
             }
@@ -254,35 +265,39 @@ class Listener implements ActionListener {
                         "/identify - to identify your previous registereld nickname " + "\n" +
                         "/logs - open logs client side " + "\n" +
                         "/clearlogs - clear logs client side" + "\n" + "-----------------" + "\n");
-            }
-            else if (ChatClient.textField.getText().substring(1).equals("credits")) {
+            } else if (ChatClient.textField.getText().substring(1).equals("credits")) {
                 ChatClient.chatArea.append("MIT Copyright " + "\n" + "Copyright (c) 2020 Alessandro Buonerba & Tommaso Bruno" + "\n");
 
             } else if (ChatClient.textField.getText().substring(1).equals("quit")) {
                 System.exit(0);
             } else if (ChatClient.textField.getText().substring(1).startsWith("whois")) {
-            String param = ChatClient.textField.getText().substring(7);
-            System.out.println(param);
-            ChatClient.out.println("WHOIS" + ChatClient.nameLabel.getText().substring(22).split("\n")[0] + "/" + param);
-        } else if (ChatClient.textField.getText().substring(1).startsWith("msg")) {
-            String[] param = ChatClient.textField.getText().substring(5).split(" ");
-            if (param[1].equals(ChatClient.nameLabel.getText().substring(22).split("\n")[0])) {
-                ChatClient.chatArea.append(" > You can't send a message to yourself." + "\n");
-            } else {
-                param[1] = ChatClient.textField.getText().substring(7 + param[0].length() - 1);
-                System.out.println(param[0] + " " + param[1]);
-                ChatClient.out.println("WHISPER" + "/" + ChatClient.nameLabel.getText().substring(22).split("\n")[0] + "/" + param[0] + "/" + param[1]);
-                //System.out.println(ChatClient.nameLabel.getText().substring(22) + " is sending a message to " + param[1] + ". Message is: " + param[2]);
-            }
-        } else if (ChatClient.textField.getText().substring(1).startsWith("nickname")) {
-            String param = ChatClient.textField.getText().substring(10);
-            System.out.println(param);
+                String param = ChatClient.textField.getText().substring(7);
+                System.out.println(param);
+                ChatClient.out.println("WHOIS" + ChatClient.nameLabel.getText().substring(22).split("\n")[0] + "/" + param);
+            } else if (ChatClient.textField.getText().substring(1).startsWith("msg")) {
+                String[] param = ChatClient.textField.getText().substring(5).split(" ");
+                if (param[1].equals(ChatClient.nameLabel.getText().substring(22).split("\n")[0])) {
+                    ChatClient.chatArea.append(">> [You can't send a message to yourself] <<" + "\n");
+                } else {
+                    param[1] = ChatClient.textField.getText().substring(7 + param[0].length() - 1);
+                    System.out.println(param[0] + " " + param[1]);
+                    ChatClient.out.println("WHISPER" + "/" + ChatClient.nameLabel.getText().substring(22).split("\n")[0] + "/" + param[0] + "/" + param[1]);
+                    //System.out.println(ChatClient.nameLabel.getText().substring(22) + " is sending a message to " + param[1] + ". Message is: " + param[2]);
+                }
+            } else if (ChatClient.textField.getText().substring(1).startsWith("nickname")) {
+                String param = ChatClient.textField.getText().substring(10);
+                System.out.println(param);
 
-            ChatClient.out.println("NICKCHANGE" + param + "/" + ChatClient.nameLabel.getText().substring(22).split("\n")[0]);
-        } else ChatClient.chatArea.append("Command not found, type " +
-                "/help to see all the commands" + "\n");
-    } else ChatClient.out.println(ChatClient.textField.getText());
+                ChatClient.out.println("NICKCHANGE" + param + "/" + ChatClient.nameLabel.getText().substring(22).split("\n")[0]);
+            } else if(ChatClient.textField.getText().substring(1).startsWith("away")) {
+                String reason =  ChatClient.textField.getText().substring(6);
+                ChatClient.out.println("AWAY" + reason);
+            } else if (ChatClient.textField.getText().substring(1).startsWith("online")) {
+                ChatClient.out.println("GOONLINE");
+            } else ChatClient.chatArea.append("Command not found, type " +
+                    "/help to see all the commands" + "\n");
+        } else ChatClient.out.println(ChatClient.textField.getText());
         ChatClient.textField.setText("");
-}
+    }
 }
 

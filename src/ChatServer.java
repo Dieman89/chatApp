@@ -13,8 +13,10 @@ public class ChatServer {
     static ArrayList<PrintWriter> printWriters = new ArrayList<PrintWriter>();
     static ArrayList<String> onlineUsers = new ArrayList<>();
     static ArrayList<Socket> sockets = new ArrayList<>();
+    static ArrayList<Boolean> statusArray = new ArrayList<Boolean>();
+    static ArrayList<String> reasons = new ArrayList<>();
     static int seconds = 5;
-    static boolean full = false;
+    static Boolean full = false;
 
     public static void main(String[] args) {
 
@@ -53,7 +55,6 @@ public class ChatServer {
                     handler.start();
                 }
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -74,6 +75,7 @@ class ConversationHandler extends Thread {
     //for logs under
     PrintWriter pw;
     String name;
+    boolean away;
 
     public ConversationHandler(Socket socket, ArrayList<Socket> sockets, String name) throws IOException {
         this.socket = socket;
@@ -102,7 +104,9 @@ class ConversationHandler extends Thread {
 
         StringBuilder names = new StringBuilder();
         for (int j = 0; j < ChatServer.userNames.size(); j++) {
-            names.append(ChatServer.userNames.get(j)).append(",");
+            if (ChatServer.statusArray.get(j))
+                names.append(ChatServer.userNames.get(j)).append("(A),");
+            else  names.append(ChatServer.userNames.get(j)).append(",");
         }
         for (PrintWriter out : ChatServer.printWriters) {
             out.println("//" + names);
@@ -142,6 +146,8 @@ class ConversationHandler extends Thread {
                 if (ChatServer.userNames.size() <= 19) {
                     if (!ChatServer.userNames.contains(name)) {
                         ChatServer.userNames.add(name);
+                        ChatServer.statusArray.add(false);
+                        ChatServer.reasons.add("");
                         if (!ChatServer.onlineUsers.contains(name)) {
                             ChatServer.onlineUsers.add(name);
                         }
@@ -197,14 +203,18 @@ class ConversationHandler extends Thread {
                     int sender = ChatServer.userNames.indexOf(arrays[1]);
                     String msg = arrays[3];
 
-                    if (ChatServer.userNames.contains(arrays[2])) {
-                        for (int i = 0; i < ChatServer.printWriters.size(); i++) {
-                            if (i == targetMsg || i == sender) {
-                                ChatServer.printWriters.get(i).println("(whisper) " + ChatServer.userNames.get(sender) + ": " + msg);
+                    System.out.println(ChatServer.statusArray);
+
+                    if (!ChatServer.statusArray.get(targetMsg)) {
+                        if (ChatServer.userNames.contains(arrays[2])) {
+                            for (int i = 0; i < ChatServer.printWriters.size(); i++) {
+                                if (i == targetMsg || i == sender) {
+                                    ChatServer.printWriters.get(i).println("(whisper) " + ChatServer.userNames.get(sender) + ": " + msg);
+                                }
                             }
-                        }
+                        } else ChatServer.printWriters.get(sender).println(">> [User not found] <<");
                     } else {
-                        ChatServer.printWriters.get(sender).println("User not found");
+                        ChatServer.printWriters.get(sender).println(">> [USER AWAY] (whisper) " + ChatServer.userNames.get(sender) + ": " + msg + " <<");
                     }
                 } else if (message.startsWith("WHOIS")) {
                     String[] arrays = message.substring(5).split("/");
@@ -214,7 +224,7 @@ class ConversationHandler extends Thread {
                     System.out.println(Arrays.toString(arrays));
                     if (ChatServer.userNames.contains(arrays[1])) {
                         ChatServer.printWriters.get(destination).println("ID " + ChatServer.userNames.get(target) + ", IP: " + ChatServer.sockets.get(target).getInetAddress() + ", PORT: " + ChatServer.sockets.get(target).getPort());
-                    } else ChatServer.printWriters.get(destination).println("User not found");
+                    } else ChatServer.printWriters.get(destination).println(">> [User not found] <<");
                 } else if (message.startsWith("NICKCHANGE")) {
                     String[] username = message.substring(10).split("/");
                     System.out.println(Arrays.toString(username));
@@ -245,12 +255,46 @@ class ConversationHandler extends Thread {
 
                     }
 
+                } else if (message.startsWith("AWAY")) {
+                    String reason = message.substring(4);
+
+                    int index = ChatServer.userNames.indexOf(this.name);
+                    ChatServer.statusArray.add(index, true);
+                    ChatServer.reasons.add(index, reason);
+
+                    for (PrintWriter out : ChatServer.printWriters) {
+                        out.println(">> [The user " + this.name + " is away for this reason: " + reason + "] <<");
+                        out.println("AFK" + this.name);
+                    }
+                } else if (message.equals("GOONLINE")) {
+                    int index = ChatServer.userNames.indexOf(this.name);
+                    if (!ChatServer.statusArray.get(index)) {
+                        ChatServer.printWriters.get(index).println(">> [You are already online] <<");
+                    } else {
+                        ChatServer.reasons.set(index, "");
+                        ChatServer.statusArray.set(index, false);
+
+                        for (PrintWriter out : ChatServer.printWriters) {
+                            out.println("BACKONLINE" + this.name);
+                        }
+                    }
+
                 } else if (!message.equals("")) {
 
                     pw.println("[" + new Timestamp(System.currentTimeMillis()).toString() + "]" + " " + name + ": " + message);
 
-                    for (PrintWriter writer : ChatServer.printWriters) {
-                        writer.println(name + ": " + message);
+                    int index = ChatServer.userNames.indexOf(this.name);
+                    for (int j = 0; j < ChatServer.printWriters.size(); j++) {
+                        if (ChatServer.statusArray.get(index)) {
+                            ChatServer.statusArray.set(index, false);
+                            ChatServer.reasons.set(index, "");
+
+                            for (PrintWriter out : ChatServer.printWriters) {
+                                out.println("BACKONLINE" + ChatServer.userNames.get(index));
+                            }
+                        }
+
+                        ChatServer.printWriters.get(j).println(name + ": " + message);
                     }
                 }
             }
@@ -267,6 +311,9 @@ class ConversationHandler extends Thread {
                         System.out.println("I'm in");
                         out.println("OFFLINE" + name);
                     }
+
+                    ChatServer.statusArray.remove(index);
+                    ChatServer.reasons.remove(index);
                     ChatServer.onlineUsers.remove(name);
                     ChatServer.sockets.remove(socket);
                 }
