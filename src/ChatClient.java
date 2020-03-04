@@ -286,12 +286,14 @@ class Listener implements ActionListener {
             } else if (ChatClient.textField.getText().substring(1).equals("credits")) {
                 ChatClient.chatArea.append("MIT Copyright " + "\n" + "Copyright (c) 2020 Alessandro Buonerba & Tommaso Bruno" + "\n");
 
-            } else if (ChatClient.textField.getText().substring(1).equals("quit")) {
+            } else if (ChatClient.textField.getText().substring(1).equals("quit") || ChatClient.textField.getText().substring(5).trim().length() == 0) {
                 System.exit(0);
             } else if (ChatClient.textField.getText().substring(1).startsWith("whois")) {
-                String param = ChatClient.textField.getText().substring(7);
-                System.out.println(param);
-                ChatClient.out.println("WHOIS" + ChatClient.nameLabel.getText().substring(22).split("\n")[0] + "/" + param);
+                if (!ChatClient.textField.getText().substring(6).equals("") && ChatClient.textField.getText().substring(6).trim().length() > 0) {
+                    String param = ChatClient.textField.getText().substring(7);
+                    System.out.println(param);
+                    ChatClient.out.println("WHOIS" + ChatClient.nameLabel.getText().substring(22).split("\n")[0] + "/" + param);
+                } else  ChatClient.chatArea.append(">> [The command whois required a param] <<" + "\n");
             } else if (ChatClient.textField.getText().substring(1).startsWith("msg")) {
                 String[] param = ChatClient.textField.getText().substring(5).split(" ");
                 if (param[1].equals(ChatClient.nameLabel.getText().substring(22).split("\n")[0])) {
