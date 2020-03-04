@@ -134,23 +134,39 @@ public class ChatClient {
                 assert str != null;
                 if (str.equals("NAMEREQUIRED")) {
                     String name = "";
-                    while (name.equals("")) {
+                    while (name.equals("") && !name.matches("^[a-zA-Z0-9]+$")) {
                         name = JOptionPane.showInputDialog(
                                 chatWindow,
                                 "Enter an unique name:",
                                 "Name required!",
                                 JOptionPane.PLAIN_MESSAGE);
+                        if (!name.matches("^[a-zA-Z0-9]+$")) {
+                            JOptionPane.showMessageDialog(chatWindow,
+                                    "Name must contain only alphanumeric characters",
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE);
+                            name = "";
+                        }
+
                     }
                     username = name;
                     out.println(name);
-                } else if (str.equals("NAMEALREADYEXISTS")) {
+                } else if (str.equals("NAMEALREADYEXISTS") ) {
                     String name = "";
-                    while (name.equals("")) {
+                    while (name.equals("") && !name.matches("^[a-zA-Z0-9]+$")) {
                         name = JOptionPane.showInputDialog(
                                 chatWindow,
                                 "Enter a different name:",
                                 "Name already exists!",
                                 JOptionPane.WARNING_MESSAGE);
+
+                        if (!name.matches("^[a-zA-Z0-9]+$")) {
+                            JOptionPane.showMessageDialog(chatWindow,
+                                    "Name must contain only alphanumeric characters",
+                                    "Error",
+                                    JOptionPane.ERROR_MESSAGE);
+                            name = "";
+                        }
                     }
                     username = name;
                     out.println(name);
@@ -204,11 +220,8 @@ public class ChatClient {
                         System.exit(0);
                     }
                 } else if (str.startsWith("NICKUPDATED")) {
-                    ChatClient.nameLabel.setText(">> [You are logged in as: " + str.substring(11).split("/")[0] + "] <<" + "\n");
+                    ChatClient.nameLabel.setText("You are logged in as: " + str.substring(11).split("/")[0] + "\n");
                     ChatClient.chatArea.append(">> [Your nickname is now: " + str.substring(11).split("/")[0] + "] << " + "\n");
-                    int index = defaultListModel.indexOf(str.substring(11).split("/")[1]);
-                    defaultListModel.setElementAt(str.substring(11).split("/")[1], index);
-                    users.setModel(defaultListModel);
 
                 } else if (str.startsWith("NICKNAME")) {
                     String[] params = str.substring(8).split("/");
@@ -216,6 +229,11 @@ public class ChatClient {
                     String previous = params[1];
                     String newName = params[0];
 
+                    int index = defaultListModel.indexOf(previous);
+                    if (index != -1) {
+                        defaultListModel.setElementAt(newName, index);
+                        users.setModel(defaultListModel);
+                    }
                     ChatClient.chatArea.append(">> [" + previous + " has changed its nickname to: " + newName + "] <<" + "\n");
                 } else if (str.startsWith("BACKONLINE")) {
                     int index = defaultListModel.indexOf(str.substring(10) + "(A)");
@@ -285,10 +303,15 @@ class Listener implements ActionListener {
                     //System.out.println(ChatClient.nameLabel.getText().substring(22) + " is sending a message to " + param[1] + ". Message is: " + param[2]);
                 }
             } else if (ChatClient.textField.getText().substring(1).startsWith("nickname")) {
-                String param = ChatClient.textField.getText().substring(10);
-                System.out.println(param);
-
-                ChatClient.out.println("NICKCHANGE" + param + "/" + ChatClient.nameLabel.getText().substring(22).split("\n")[0]);
+                String name = ChatClient.textField.getText().substring(10);
+                System.out.println(name);
+                if (!name.matches("^[a-zA-Z0-9]+$")) {
+                    ChatClient.chatArea.append(">> [Name must contain only alphanumeric characters] <<" + "\n");
+                } else {
+                    String param = ChatClient.textField.getText().substring(10);
+                    System.out.println(param);
+                    ChatClient.out.println("NICKCHANGE" + param + "/" + ChatClient.nameLabel.getText().substring(22).split("\n")[0]);
+                }
             } else if(ChatClient.textField.getText().substring(1).startsWith("away")) {
                 String reason =  ChatClient.textField.getText().substring(6);
                 ChatClient.out.println("AWAY" + reason);

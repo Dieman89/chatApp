@@ -201,21 +201,26 @@ class ConversationHandler extends Thread {
 
                     int targetMsg = ChatServer.userNames.indexOf(arrays[2]);
                     int sender = ChatServer.userNames.indexOf(arrays[1]);
+                    String senderCheck = this.name;
                     String msg = arrays[3];
 
                     System.out.println(ChatServer.statusArray);
 
-                    if (!ChatServer.statusArray.get(targetMsg)) {
+                    //if (!senderCheck.equals(ChatServer.userNames.get(sender))) {
+                    if (ChatServer.userNames.size() > 1) {
                         if (ChatServer.userNames.contains(arrays[2])) {
-                            for (int i = 0; i < ChatServer.printWriters.size(); i++) {
-                                if (i == targetMsg || i == sender) {
-                                    ChatServer.printWriters.get(i).println("(whisper) " + ChatServer.userNames.get(sender) + ": " + msg);
+                            if (!ChatServer.statusArray.get(targetMsg)) {
+                                for (int i = 0; i < ChatServer.printWriters.size(); i++) {
+                                    if (i == targetMsg || i == sender) {
+                                        ChatServer.printWriters.get(i).println("(whisper) " + ChatServer.userNames.get(sender) + ": " + msg);
+                                    }
                                 }
-                            }
-                        } else ChatServer.printWriters.get(sender).println(">> [User not found] <<");
-                    } else {
-                        ChatServer.printWriters.get(sender).println(">> [USER AWAY] (whisper) " + ChatServer.userNames.get(sender) + ": " + msg + " <<");
-                    }
+                            } else ChatServer.printWriters.get(sender).println(">> [USER AWAY] (whisper) " + ChatServer.userNames.get(sender) + ": " + msg + " <<");
+                        } else {
+                            ChatServer.printWriters.get(sender).println(">> [User not found] <<");
+                        }
+                    } else ChatServer.printWriters.get(sender).println(">> [User not found] <<");
+                    //}
                 } else if (message.startsWith("WHOIS")) {
                     String[] arrays = message.substring(5).split("/");
                     int destination = ChatServer.userNames.indexOf(arrays[0]);
@@ -232,7 +237,7 @@ class ConversationHandler extends Thread {
                     if (!ChatServer.userNames.contains(username[0])) {
                         int index = ChatServer.userNames.indexOf(username[1]);
 
-                        ArrayList<String> cloneArray = new ArrayList<>();
+                        ArrayList<String> cloneArray;
                         cloneArray = ChatServer.userNames;
 
                         cloneArray.set(index, username[0]);
@@ -247,11 +252,11 @@ class ConversationHandler extends Thread {
                         ChatServer.printWriters.get(index).println("NICKUPDATED" + username[0] + "/" + username[1]);
 
                         this.name = username[0];
-                        /*for (int i = 0; i < ChatServer.printWriters.size(); i++) {
+                        for (int i = 0; i < ChatServer.printWriters.size(); i++) {
                             if (i != index) {
                                 ChatServer.printWriters.get(i).println("NICKNAME" + username[0] + "/" + username[1]);
                             }
-                        }*/
+                        }
 
                     }
 
