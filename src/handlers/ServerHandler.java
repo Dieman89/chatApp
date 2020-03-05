@@ -141,7 +141,7 @@ public class ServerHandler extends Thread {
                     System.out.println(Arrays.toString(arrays));
 
                     int targetMsg = ServerHandler.userNames.indexOf(arrays[1]);
-                    int sender = ServerHandler.userNames.indexOf(this.name);
+                    int sender = ServerHandler.userNames.indexOf(name);
 
                     String msg = arrays[2];
 
@@ -187,10 +187,9 @@ public class ServerHandler extends Thread {
                         ServerHandler.onlineUsers.set(index, username[0]);
 
                         System.out.println(ServerHandler.userNames);
-                        this.name = username[0];
+                        name = username[0];
                         ServerHandler.writers.get(index).println("NICKUPDATED" + username[0] + "/" + username[1]);
 
-                        this.name = username[0];
                         for (int i = 0; i < ServerHandler.writers.size(); i++) {
                             if (i != index) {
                                 ServerHandler.writers.get(i).println("NICKNAME" + username[0] + "/" + username[1]);
@@ -198,7 +197,6 @@ public class ServerHandler extends Thread {
                         }
 
                     }
-
                 }
 
                 else if (message.startsWith("AWAY")) {
@@ -227,7 +225,7 @@ public class ServerHandler extends Thread {
                         ServerHandler.statusArray.set(index, false);
 
                         for (PrintWriter out : ServerHandler.writers) {
-                            out.println("BACKONLINE" + this.name);
+                            out.println("BACKONLINE" + name);
                         }
                     }
 
@@ -251,7 +249,7 @@ public class ServerHandler extends Thread {
                     pw = new PrintWriter(bw, true);
                     pw.println("[" + (new Timestamp(System.currentTimeMillis()).toString()) + "] " + name + ": " + message);
 
-                    int index = ServerHandler.userNames.indexOf(this.name);
+                    int index = ServerHandler.userNames.indexOf(name);
                     for (int j = 0; j < ServerHandler.writers.size(); j++) {
                         if (ServerHandler.statusArray.get(index)) {
                             ServerHandler.statusArray.set(index, false);
@@ -271,7 +269,7 @@ public class ServerHandler extends Thread {
             System.out.println("Connection interrupted");
 
 
-            int index = ServerHandler.userNames.indexOf(this.name);
+            int index = ServerHandler.userNames.indexOf(name);
 
             if (index != -1) {
                 if (ServerHandler.userNames.size() > 0) {

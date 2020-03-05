@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7bdd69f-8e13-4120-8cbd-36b473c5a8e8" name="Default Changelist" comment="First Commit">
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/Tommaso_Bruno.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/Tommaso_Bruno.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Chat.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/logs.txt" beforeDir="false" afterPath="$PROJECT_DIR$/logs/logs.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handlers/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/ClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handlers/ServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/ServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/listeners/LoginListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/listeners/LoginListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mains/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mains/ChatClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +23,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -43,7 +51,14 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="create.test.in.the.same.root" value="true" />
     <property name="last.edited.regexp" value="Sample Text" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="SDKs" />
@@ -53,8 +68,9 @@
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\44784\Desktop\chatApp\chatApp\images" />
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="listeners" />
+      <recent name="handlers" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\44784\Desktop\chatApp\chatApp\logs" />
@@ -63,8 +79,14 @@
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/images" />
     </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\44784\Desktop\chatApp\chatApp\images" />
+    </key>
   </component>
-  <component name="RunManager" selected="Application.Login">
+  <component name="RunManager" selected="JUnit.LoginListenerTest.errorName">
     <configuration name="ChatClient" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="mains.ChatClient" />
       <module name="Chat" />
@@ -92,15 +114,51 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="LoginListenerTest.errorName" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Chat" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.LoginListenerTest" />
+      <option name="METHOD_NAME" value="errorName" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LoginListenerTest.loginTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Chat" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.LoginListenerTest" />
+      <option name="METHOD_NAME" value="loginTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.ChatClient" />
       <item itemvalue="Application.ChatServer" />
       <item itemvalue="Application.Login" />
+      <item itemvalue="JUnit.LoginListenerTest.loginTest" />
+      <item itemvalue="JUnit.LoginListenerTest.errorName" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Login" />
+        <item itemvalue="JUnit.LoginListenerTest.errorName" />
+        <item itemvalue="JUnit.LoginListenerTest.loginTest" />
         <item itemvalue="Application.ChatServer" />
+        <item itemvalue="Application.Login" />
       </list>
     </recent_temporary>
   </component>
@@ -178,25 +236,25 @@
     </state>
     <state x="459" y="36" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1583246411615" />
     <state x="344" y="53" key="CommitChangelistDialog2/0.23.1440.877@0.23.1440.877" timestamp="1582919691058" />
-    <state width="914" height="223" key="GridCell.Tab.0.bottom" timestamp="1583439768390">
+    <state width="1877" height="372" key="GridCell.Tab.0.bottom" timestamp="1583448025630">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="914" height="223" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583439768390" />
+    <state width="1877" height="372" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583448025630" />
     <state width="1419" height="230" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1583271987314" />
-    <state width="914" height="223" key="GridCell.Tab.0.center" timestamp="1583439768390">
+    <state width="1877" height="372" key="GridCell.Tab.0.center" timestamp="1583448025630">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="914" height="223" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583439768390" />
+    <state width="1877" height="372" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583448025630" />
     <state width="1419" height="230" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1583271987313" />
-    <state width="914" height="223" key="GridCell.Tab.0.left" timestamp="1583439768390">
+    <state width="1877" height="372" key="GridCell.Tab.0.left" timestamp="1583448025630">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="914" height="223" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583439768390" />
+    <state width="1877" height="372" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583448025630" />
     <state width="1419" height="230" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1583271987311" />
-    <state width="914" height="223" key="GridCell.Tab.0.right" timestamp="1583439768390">
+    <state width="1877" height="372" key="GridCell.Tab.0.right" timestamp="1583448025630">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="914" height="223" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583439768390" />
+    <state width="1877" height="372" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583448025630" />
     <state width="1419" height="230" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1583271987313" />
     <state width="914" height="345" key="GridCell.Tab.1.bottom" timestamp="1583439693622">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -247,10 +305,18 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="397" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1583270784699" />
+    <state x="664" y="413" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1583444982707">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="664" y="413" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1920.1040@0.0.1920.1040" timestamp="1583444982707" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1583371955954">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1583371955954" />
+    <state x="731" y="223" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1583446894980">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="731" y="223" key="com.intellij.testIntegration.createTest.CreateTestDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583446894980" />
     <state x="288" y="204" width="863" height="590" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1582978373243">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -259,10 +325,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="690" y="275" width="540" height="496" key="extract.method.dialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583248739862" />
-    <state x="656" y="118" width="737" height="804" key="find.popup" timestamp="1583431887385">
+    <state x="656" y="118" width="737" height="804" key="find.popup" timestamp="1583446887110">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="118" width="737" height="804" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1583431887385" />
+    <state x="656" y="118" width="737" height="804" key="find.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1583446887110" />
     <state x="513" y="223" key="run.anything.popup" timestamp="1583419224127">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

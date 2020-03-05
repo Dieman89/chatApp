@@ -35,7 +35,8 @@ public class LoginListener implements ActionListener {
         if (ipAddress.getText().trim().equals("") || username.getText().trim().equals("")) {
             errorLabel.setText("One of the input is blank");
         } else {
-            if (username.getText().matches("^[a-zA-Z0-9]+$")) {
+            if (username.getText().matches("^[a-zA-Z0-9]+$") && (ipAddress.getText().matches("(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)")
+                    || ipAddress.getText().matches("^[a-zA-Z0-9]+$"))) {
                 Socket soc;
                 try {
                     soc = new Socket(ipAddress.getText(), 9806);
@@ -57,17 +58,17 @@ public class LoginListener implements ActionListener {
                             assert str != null;
                             if (str.equals("NAMEALREADYEXISTS")) {
                                 errorLabel.setText("Name already taken");
-                            } else if(str.equals("FULL"))  {
+                            } else if (str.equals("FULL")) {
                                 errorLabel.setText("The chat room is full, try again later");
                             } else if (str.equals("NAMEACCEPTED")) {
                                 this.window.dispose();
-                                chatClient = new ChatClient();
+                                chatClient = new ChatClient(username.getText());
                             } else {
                                 try {
                                     String finalStr = str;
                                     Thread thread = new Thread(() -> {
                                         try {
-                                            chatClient.startChat(out, finalStr, username.getText());
+                                            chatClient.startChat(out, finalStr);
                                         } catch (Exception ex) {
                                             ex.printStackTrace();
                                         }
@@ -90,5 +91,25 @@ public class LoginListener implements ActionListener {
                 }
             } else errorLabel.setText("Name must contain only alphanumeric characters");
         }
+    }
+
+
+    ////////////// FOR TEST /////////////
+    public static String errorName(String user, String ip) {
+        String error;
+        if (!ip.trim().equals("") || !user.trim().equals("")) {
+            if (user.matches("^[a-zA-Z0-9]+$") && (ip.matches("(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)")
+                    || ip.matches("^[a-zA-Z0-9]+$")))
+                error = "PASSED";
+            else error = "FAILED";
+        } else error = "FAILED";
+
+        return error;
+    }
+    ////////////// FOR TEST /////////////
+
+
+    public JLabel getErrorLabel() {
+        return errorLabel;
     }
 }

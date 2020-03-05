@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.Arrays;
 
 public class ChatClient extends JFrame {
@@ -22,14 +21,16 @@ public class ChatClient extends JFrame {
     JLabel nameLabel = new JLabel("");
     JLabel countdownLabel = new JLabel("");
     JLabel onlineLabel = new JLabel("");
-    String name = "";
     DefaultListModel<String> defaultListModel = new DefaultListModel<>();
     JButton sendButton = new JButton("Send");
     ClientHandler clientHandler;
+    private String name;
 
-    public ChatClient() {
+    public ChatClient(String name) {
 
         super("Chat Application");
+
+        this.name = name;
 
         this.setSize(new Dimension(700, 600));
         this.setLocationRelativeTo(null);
@@ -105,21 +106,21 @@ public class ChatClient extends JFrame {
 
     }
 
-    public void startChat(PrintWriter out, String str, String name) throws Exception {
+    public void startChat(PrintWriter out, String str) throws Exception {
 
         Thread newThread = new Thread(() -> {
 
-            clientHandler = new ClientHandler(textField, chatArea, name, out, defaultListModel);
+            clientHandler = new ClientHandler(textField, chatArea, this.name, out, defaultListModel);
             sendButton.addActionListener(clientHandler);
             textField.addActionListener(clientHandler);
             textField.setEditable(true);
-            nameLabel.setText("You are logged in as: " + name + "\n");
+            nameLabel.setText("You are logged in as: " + this.name + "\n");
 
             if (str.equals("PING")) {
                 Thread pingThread = new Thread(() -> {
                     System.out.println(nameLabel.getText());
-                    out.println("PONG" + name);
-                    System.out.println(name + "IS SENDING A PONG");
+                    out.println("PONG" + this.name);
+                    System.out.println(this.name + " IS SENDING A PONG");
                 });
                 pingThread.start();
 
@@ -159,9 +160,12 @@ public class ChatClient extends JFrame {
                     System.exit(0);
                 }
             } else if (str.startsWith("NICKUPDATED")) {
-                chatArea.append(">> [Your nickname is now: " + str.substring(11).split("/")[0] + "] << " + "\n");
-                nameLabel.setText("You are logged in as: " + str.substring(11).split("/")[0] + "\n");
-                clientHandler.setName(str.substring(11).split("/")[0]);
+
+                this.name = str.substring(11).split("/")[0];
+
+                chatArea.append(">> [Your nickname is now: " + this.name + "] << " + "\n");
+                nameLabel.setText("You are logged in as: " + this.name + "\n");
+
             } else if (str.startsWith("NICKNAME")) {
                 String[] params = str.substring(8).split("/");
 
@@ -172,7 +176,6 @@ public class ChatClient extends JFrame {
                     defaultListModel.setElementAt(newName, index);
                     users.setModel(defaultListModel);
                 }
-
 
                 chatArea.append(">> [" + previous + " has changed its nickname to: " + newName + "] <<" + "\n");
             } else if (str.startsWith("BACKONLINE")) {

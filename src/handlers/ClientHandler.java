@@ -14,9 +14,9 @@ public class ClientHandler implements ActionListener {
     private DefaultListModel<String> defaultListModel;
 
     public ClientHandler(JTextField textField, JTextArea chatArea, String name, PrintWriter out, DefaultListModel<String> defaultListModel) {
+        this.name = name;
         this.textField = textField;
         this.chatArea = chatArea;
-        this.name = name;
         this.out = out;
         this.defaultListModel = defaultListModel;
     }
@@ -51,8 +51,8 @@ public class ClientHandler implements ActionListener {
                 if (this.textField.getText().substring(6).trim().length() > 0) {
                     String param = this.textField.getText().substring(7);
                     System.out.println("Target =>" + param);
-                    System.out.println("Sender =>" + this.name);
-                    this.out.println("WHOIS" + this.name + "/" + param);
+                    System.out.println("Sender =>" + name);
+                    this.out.println("WHOIS" + name + "/" + param);
                 } else this.chatArea.append(">> [The command whois required a param] <<" + "\n");
             } else if (this.textField.getText().substring(1).startsWith("msg")) {
                 String[] param = this.textField.getText().substring(5).split(" ");
@@ -61,13 +61,11 @@ public class ClientHandler implements ActionListener {
 
                 param[1] = this.textField.getText().substring(7 + param[0].length() - 1);
                 System.out.println(param[0] + " " + param[1]);
-                this.out.println("WHISPER" + this.name + "/" + param[0] + "/" + param[1]);
+                this.out.println("WHISPER" + name + "/" + param[0] + "/" + param[1]);
                 System.out.println("Messages sent");
-                //System.out.println(this.nameLabel.getText().substring(22) + " is sending a message to " + param[1] + ". Message is: " + param[2]);
+                //System.out.println(nameLabel.getText().substring(22) + " is sending a message to " + param[1] + ". Message is: " + param[2]);
 
             } else if (this.textField.getText().substring(1).startsWith("nickname")) {
-                String name = this.textField.getText().substring(10);
-                System.out.println(name);
                 if (!name.matches("^[a-zA-Z0-9]+$")) {
                     this.chatArea.append(">> [Name must contain only alphanumeric characters] <<" + "\n");
                 } else {
@@ -77,20 +75,20 @@ public class ClientHandler implements ActionListener {
                 }
             } else if (this.textField.getText().substring(1).startsWith("away")) {
                 String reason = this.textField.getText().substring(6);
-                this.out.println("AWAY" + this.name + "/" + reason);
+                this.out.println("AWAY" + name + "/" + reason);
             } else if (this.textField.getText().substring(1).trim().equals("online")) {
-                this.out.println("GOONLINE" + this.name);
+                this.out.println("GOONLINE" + name);
             } else if (this.textField.getText().substring(1).trim().equals("clearlogs")) {
                 String admin = this.defaultListModel.get(0).substring(1);
                 System.out.println("Admin user = " + admin);
-                if (!this.name.equals(admin)) {
+                if (!name.equals(admin)) {
                     this.chatArea.append(">> [You are not an admin, can't clear the logs] <<" + "\n");
                 } else {
                     this.out.println("CLEARLOGS");
                     this.chatArea.append(">> [Logs have been cleared] <<" + "\n");
                 }
             } else if (this.textField.getText().substring(1).trim().equals("info")) {
-                this.out.println("INFO" + this.name);
+                this.out.println("INFO" + name);
             } else this.chatArea.append("Command not found, type " +
                     "/help to see all the commands" + "\n");
         } else this.out.println(this.textField.getText());
@@ -98,6 +96,6 @@ public class ClientHandler implements ActionListener {
     }
 
     public void setName(String name) {
-        this.name = name;
+        name = name;
     }
 }
