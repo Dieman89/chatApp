@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 public class ChatServer {
     static ServerHandler handler;
+    static int seconds = 5;
+
 
     public static void main(String[] args) {
         ArrayList<String> userNames = new ArrayList<>();
@@ -17,20 +19,47 @@ public class ChatServer {
 
         System.out.println("Waiting for clients...");
 
-        Thread connectionThread = new Thread(() -> {
-            try {
-                ServerSocket ss = new ServerSocket(9806);
-                while (true) {
-                    Socket soc;
-                    soc = ss.accept();
-                    System.out.println("Connection Established");
-                    handler = new ServerHandler(soc, sockets, userNames, onlineUsers, printWriters, statusArray, reasons);
-                    handler.start();
+        Thread countThread = new Thread(() -> {
+            while (seconds >= 0) {
+                ServerHandler.updateSeconds(seconds);
+                seconds--;
+                try {
+                    Thread.sleep(1000);
+                    System.out.println(seconds);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+                if (seconds == 0) {
+                    if (ServerHandler.userNames != null) {
+                        if (ServerHandler.getUserNames().size() > 0) {
+                            ServerHandler.compareArrays();
+                        }
+                    }
+
+                    seconds = 5;
+                }
             }
         });
-        connectionThread.start();
+
+        countThread.start();
+
+
+
+        try {
+            ServerSocket ss = new ServerSocket(9806);
+            while (true) {
+                Socket soc;
+                soc = ss.accept();
+                System.out.println("Connection Established");
+                handler = new ServerHandler(soc, sockets, userNames, onlineUsers, printWriters, statusArray, reasons);
+                handler.start();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
     }
 }
