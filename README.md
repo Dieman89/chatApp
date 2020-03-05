@@ -17,7 +17,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/Dieman89/chatApp">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images/logo.png" alt="Logo" width="191px" height="153px">
   </a>
 
   <h3 align="center">Chat Application</h3>
