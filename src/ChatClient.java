@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
+import java.nio.channels.ScatteringByteChannel;
 import java.util.Arrays;
 
 public class ChatClient {
@@ -20,7 +22,8 @@ public class ChatClient {
     static JLabel onlineLabel = new JLabel("");
     static String ipAddress;
     static String username;
-    DefaultListModel<String> defaultListModel = new DefaultListModel<>();
+    static String name = "";
+    static DefaultListModel<String> defaultListModel = new DefaultListModel<>();
 
     ChatClient() {
         chatWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -92,9 +95,6 @@ public class ChatClient {
             e.printStackTrace();
         }
 
-        //chatArea.setFont(new Font("/fonts/Avenir.ttf", Font.BOLD, 13));
-
-
         sendButton.addActionListener(new Listener());
         textField.addActionListener(new Listener());
     }
@@ -104,6 +104,7 @@ public class ChatClient {
         ChatClient client;
         client = new ChatClient();
         try {
+
             client.startChat();
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,8 +119,13 @@ public class ChatClient {
                 "Enter IP Address:",
                 "IP Address Required!",
                 JOptionPane.PLAIN_MESSAGE);
-
-        Socket soc = new Socket(ipAddress, 9806);
+        Socket soc = null;
+        try {
+            soc = new Socket(ipAddress, 9806);
+        } catch(SocketException e) {
+            e.printStackTrace();
+        }
+        assert soc != null;
         in = new BufferedReader(new InputStreamReader(soc.getInputStream()));
         out = new PrintWriter(soc.getOutputStream(), true);
 
@@ -129,11 +135,12 @@ public class ChatClient {
                 try {
                     str = in.readLine();
                 } catch (IOException e) {
+                    new ChatServer();
                     e.printStackTrace();
                 }
                 assert str != null;
                 if (str.equals("NAMEREQUIRED")) {
-                    String name = "";
+
                     while (name.equals("") && !name.matches("^[a-zA-Z0-9]+$")) {
                         name = JOptionPane.showInputDialog(
                                 chatWindow,
@@ -265,7 +272,7 @@ class Listener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (ChatClient.textField.getText().startsWith("/")) {
-            if (ChatClient.textField.getText().substring(1).equals("clear")) {
+            if (ChatClient.textField.getText().substring(1).trim().equals("clear")) {
                 ChatClient.chatArea.setText("");
             } else if (ChatClient.textField.getText().substring(1).equals("help")) {
 
@@ -283,28 +290,41 @@ class Listener implements ActionListener {
                         "/identify - to identify your previous registereld nickname " + "\n" +
                         "/logs - open logs client side " + "\n" +
                         "/clearlogs - clear logs client side" + "\n" + "-----------------" + "\n");
-            } else if (ChatClient.textField.getText().substring(1).equals("credits")) {
+            }
+
+            else if (ChatClient.textField.getText().substring(1).equals("credits")) {
                 ChatClient.chatArea.append("MIT Copyright " + "\n" + "Copyright (c) 2020 Alessandro Buonerba & Tommaso Bruno" + "\n");
 
-            } else if (ChatClient.textField.getText().substring(1).equals("quit") || ChatClient.textField.getText().substring(5).trim().length() == 0) {
+            }
+
+            else if (ChatClient.textField.getText().substring(1).equals("quit")) {
                 System.exit(0);
-            } else if (ChatClient.textField.getText().substring(1).startsWith("whois")) {
-                if (!ChatClient.textField.getText().substring(6).equals("") && ChatClient.textField.getText().substring(6).trim().length() > 0) {
-                    String param = ChatClient.textField.getText().substring(7);
+            }
+
+            else if (ChatClient.textField.getText().substring(1).startsWith("whois")) {
+                if (ChatClient.textField.getText().substring(6).trim().length() > 0) {
+                    String param = ChatClient.textField.getText().substring(6);
                     System.out.println(param);
-                    ChatClient.out.println("WHOIS" + ChatClient.nameLabel.getText().substring(22).split("\n")[0] + "/" + param);
+                    ChatClient.out.println("WHOIS" + ChatClient.nameLabel.getText().substring(22) + "/" + param);
                 } else  ChatClient.chatArea.append(">> [The command whois required a param] <<" + "\n");
-            } else if (ChatClient.textField.getText().substring(1).startsWith("msg")) {
+            }
+
+
+            else if (ChatClient.textField.getText().substring(1).startsWith("msg")) {
                 String[] param = ChatClient.textField.getText().substring(5).split(" ");
-                if (param[1].equals(ChatClient.nameLabel.getText().substring(22).split("\n")[0])) {
+
+                System.out.println(param[0]);
+                if (param[0].equals(ChatClient.name)) {
                     ChatClient.chatArea.append(">> [You can't send a message to yourself] <<" + "\n");
                 } else {
                     param[1] = ChatClient.textField.getText().substring(7 + param[0].length() - 1);
                     System.out.println(param[0] + " " + param[1]);
-                    ChatClient.out.println("WHISPER" + "/" + ChatClient.nameLabel.getText().substring(22).split("\n")[0] + "/" + param[0] + "/" + param[1]);
+                    ChatClient.out.println("WHISPER" + ChatClient.name + "/" + param[0] + "/" + param[1]);
                     //System.out.println(ChatClient.nameLabel.getText().substring(22) + " is sending a message to " + param[1] + ". Message is: " + param[2]);
                 }
-            } else if (ChatClient.textField.getText().substring(1).startsWith("nickname")) {
+            }
+
+            else if (ChatClient.textField.getText().substring(1).startsWith("nickname")) {
                 String name = ChatClient.textField.getText().substring(10);
                 System.out.println(name);
                 if (!name.matches("^[a-zA-Z0-9]+$")) {
@@ -312,16 +332,37 @@ class Listener implements ActionListener {
                 } else {
                     String param = ChatClient.textField.getText().substring(10);
                     System.out.println(param);
-                    ChatClient.out.println("NICKCHANGE" + param + "/" + ChatClient.nameLabel.getText().substring(22).split("\n")[0]);
+                    ChatClient.out.println("NICKCHANGE" + param + "/" + ChatClient.name);
                 }
-            } else if(ChatClient.textField.getText().substring(1).startsWith("away")) {
+            }
+
+            else if(ChatClient.textField.getText().substring(1).startsWith("away")) {
                 String reason =  ChatClient.textField.getText().substring(6);
                 ChatClient.out.println("AWAY" + reason);
-            } else if (ChatClient.textField.getText().substring(1).startsWith("online")) {
-                ChatClient.out.println("GOONLINE");
+            }
+
+            else if (ChatClient.textField.getText().substring(1).startsWith("online")) {
+                ChatClient.out.println("GOONLINE" + ChatClient.name);
+            }
+
+            else if (ChatClient.textField.getText().substring(1).startsWith("clearlogs")) {
+                String admin = ChatClient.defaultListModel.get(0).substring(1);
+                System.out.println("Admin user = " + admin);
+                if (!ChatClient.name.equals(admin)) {
+                    ChatClient.chatArea.append(">> [You are not an admin, can't clear the logs] <<" + "\n");
+                } else {
+                    ChatClient.out.println("CLEARLOGS");
+                    ChatClient.chatArea.append(">> [Logs have been cleared] <<" + "\n");
+                }
+            }
+
+            else if (ChatClient.textField.getText().substring(1).trim().equals("info")) {
+                ChatClient.out.println("INFO" + ChatClient.name);
             } else ChatClient.chatArea.append("Command not found, type " +
                     "/help to see all the commands" + "\n");
-        } else ChatClient.out.println(ChatClient.textField.getText());
+        }
+
+        else ChatClient.out.println(ChatClient.textField.getText());
         ChatClient.textField.setText("");
     }
 }

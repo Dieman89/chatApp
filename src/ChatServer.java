@@ -69,6 +69,7 @@ class ConversationHandler extends Thread {
     static PrintWriter out;
     static FileWriter fw;
     static BufferedWriter bw;
+    static File file;
     ArrayList<Socket> sockets;
     Socket socket;
     BufferedReader in;
@@ -81,9 +82,7 @@ class ConversationHandler extends Thread {
         this.socket = socket;
         this.sockets = sockets;
         this.name = name;
-        fw = new FileWriter("src/logs.txt", true); //true means append
-        bw = new BufferedWriter(fw); // write entire string at the time to a file
-        pw = new PrintWriter(bw, true);
+        file = new File("src/logs.txt");
     }
 
     public static void sendCount(int seconds) {
@@ -196,13 +195,13 @@ class ConversationHandler extends Thread {
                     }
 
                 } else if (message.startsWith("WHISPER")) {
-                    String[] arrays = message.split("/");
+                    String[] arrays = message.substring(7).split("/");
                     System.out.println(Arrays.toString(arrays));
 
-                    int targetMsg = ChatServer.userNames.indexOf(arrays[2]);
-                    int sender = ChatServer.userNames.indexOf(arrays[1]);
-                    String senderCheck = this.name;
-                    String msg = arrays[3];
+                    int targetMsg = ChatServer.userNames.indexOf(arrays[1]);
+                    int sender = ChatServer.userNames.indexOf(arrays[0]);
+
+                    String msg = arrays[2];
 
                     System.out.println(ChatServer.statusArray);
 
@@ -271,8 +270,8 @@ class ConversationHandler extends Thread {
                         out.println(">> [The user " + this.name + " is away for this reason: " + reason + "] <<");
                         out.println("AFK" + this.name);
                     }
-                } else if (message.equals("GOONLINE")) {
-                    int index = ChatServer.userNames.indexOf(this.name);
+                } else if (message.startsWith("GOONLINE")) {
+                    int index = ChatServer.userNames.indexOf(message.substring(8));
                     if (!ChatServer.statusArray.get(index)) {
                         ChatServer.printWriters.get(index).println(">> [You are already online] <<");
                     } else {
@@ -284,9 +283,23 @@ class ConversationHandler extends Thread {
                         }
                     }
 
-                } else if (!message.equals("")) {
+                } else if (message.equals("CLEARLOGS")) {
+                    fw = new FileWriter(file);
+                    bw = new BufferedWriter(fw);
+                    pw = new PrintWriter(bw, true);
+                    pw.print("");
+                } else if (message.startsWith("INFO")) {
+                    String name = message.substring(4);
 
-                    pw.println("[" + new Timestamp(System.currentTimeMillis()).toString() + "]" + " " + name + ": " + message);
+                    int index = ChatServer.userNames.indexOf(name);
+                    System.out.println("INFO NAME: " + name);
+                    ChatServer.printWriters.get(index).println(">> Your info: [ID: " + name + "/ IP: " + sockets.get(index).getInetAddress() + ", PORT: " + sockets.get(index).getPort() + "] <<");
+
+                } else if (!message.equals("")) {
+                    fw = new FileWriter(file, true);
+                    bw = new BufferedWriter(fw);
+                    pw = new PrintWriter(bw, true);
+                    pw.println("[" + (new Timestamp(System.currentTimeMillis()).toString()) + "] " + name + ": " + message);
 
                     int index = ChatServer.userNames.indexOf(this.name);
                     for (int j = 0; j < ChatServer.printWriters.size(); j++) {
