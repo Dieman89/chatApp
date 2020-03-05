@@ -10,29 +10,35 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.Arrays;
 
-public class ChatClient {
-     JList<String> users = new JList<>();
-     JFrame chatWindow = new JFrame("Chat Application");
-     JTextArea chatArea = new JTextArea();
-     JTextField textField = new JTextField(40);
-     BufferedReader in;
-     PrintWriter out;
-     JLabel nameLabel = new JLabel("");
-     JLabel countdownLabel = new JLabel("");
-     JLabel onlineLabel = new JLabel("");
-     String name = "";
-     DefaultListModel<String> defaultListModel = new DefaultListModel<>();
-     JButton sendButton = new JButton("Send");
-     ClientHandler clientHandler;
+public class ChatClient extends JFrame {
 
-    ChatClient() {
-        chatWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        chatWindow.setResizable(false);
+    JList<String> users = new JList<>();
+    JTextArea chatArea = new JTextArea();
+    JTextField textField = new JTextField(40);
+    private BufferedReader in;
+    private PrintWriter out;
+    private String str;
+    private Socket soc;
+    JLabel nameLabel = new JLabel("");
+    JLabel countdownLabel = new JLabel("");
+    JLabel onlineLabel = new JLabel("");
+    String name = "";
+    DefaultListModel<String> defaultListModel = new DefaultListModel<>();
+    JButton sendButton = new JButton("Send");
+    ClientHandler clientHandler;
+
+    public ChatClient() {
+
+        super("Chat Application");
+
+        this.setSize(new Dimension(700, 600));
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setResizable(false);
         chatArea.addKeyListener(new ExitListener());
         textField.addKeyListener(new ExitListener());
         users.addKeyListener(new ExitListener());
 
-        chatWindow.setSize(new Dimension(700, 600));
 
         JPanel chatPanel = new JPanel(new BorderLayout());
         chatPanel.setPreferredSize(new Dimension(400, 570));
@@ -73,14 +79,11 @@ public class ChatClient {
         onlineLabel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.WHITE));
         usersPanel.add(onlineLabel, BorderLayout.NORTH);
 
-
-        chatWindow.add(usersPanel, BorderLayout.EAST);
-
-        chatWindow.add(chatPanel);
-        chatWindow.setVisible(true);
         textField.setEditable(false);
-        chatWindow.setLocationRelativeTo(null);
         chatArea.setEditable(false);
+
+        this.add(usersPanel, BorderLayout.EAST);
+
 
         try {
             //create the font to use. Specify the size!
@@ -95,177 +98,101 @@ public class ChatClient {
             e.printStackTrace();
         }
 
-        
-    }
-
-    public static void main(String[] args) {
-
-        ChatClient client;
-        client = new ChatClient();
-        try {
-
-            client.startChat();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.add(chatPanel);
+        this.setVisible(true);
+        this.add(chatPanel);
+        this.setVisible(true);
 
     }
 
-    void startChat() throws Exception {
+    public void startChat(PrintWriter out, String str, String name) throws Exception {
 
-        String ipAddress = JOptionPane.showInputDialog(
-                chatWindow,
-                "Enter IP Address:",
-                "IP Address Required!",
-                JOptionPane.PLAIN_MESSAGE);
-        Socket soc = null;
-        try {
-            soc = new Socket(ipAddress, 9806);
-        } catch(SocketException e) {
-            e.printStackTrace();
-        }
-        assert soc != null;
-        in = new BufferedReader(new InputStreamReader(soc.getInputStream()));
-        out = new PrintWriter(soc.getOutputStream(), true);
-
-        
         Thread newThread = new Thread(() -> {
-            while (true) {
-                String str = null;
-                try {
-                    str = in.readLine();
-                } catch (IOException e) {
-                    new ChatServer();
-                    e.printStackTrace();
+
+            clientHandler = new ClientHandler(textField, chatArea, name, out, defaultListModel);
+            sendButton.addActionListener(clientHandler);
+            textField.addActionListener(clientHandler);
+            textField.setEditable(true);
+            nameLabel.setText("You are logged in as: " + name + "\n");
+
+            if (str.equals("PING")) {
+                Thread pingThread = new Thread(() -> {
+                    System.out.println(nameLabel.getText());
+                    out.println("PONG" + name);
+                    System.out.println(name + "IS SENDING A PONG");
+                });
+                pingThread.start();
+
+            } else if (str.startsWith("//")) {
+                Thread listThread = new Thread(() -> {
+                    String[] arrayNames = str.substring(2).split(",");
+                    System.out.println(Arrays.asList(arrayNames));
+
+                    arrayNames[0] = "@" + arrayNames[0];
+
+                    defaultListModel.clear();
+                    defaultListModel.addAll(Arrays.asList(arrayNames));
+                    users.setModel(defaultListModel);
+                });
+                listThread.start();
+
+            } else if (str.startsWith("NEWADMIN")) {
+                System.out.println("Changing admin");
+                chatArea.append(">> [Previous admin " + str.substring(8).split("/")[0] +
+                        " has disconnected, new admin is: " + str.substring(8).split("/")[1] + "] <<" + "\n");
+            } else if (str.equals("FIRST")) {
+                JOptionPane.showMessageDialog(this, "You are the first user in the chat");
+            } else if (str.startsWith("OFFLINE")) {
+                chatArea.append(">> [" + str.substring(7) + " is offline] <<" + "\n" + "");
+                defaultListModel.removeElement(str.substring(7));
+                users.setModel(defaultListModel);
+            } else if (str.startsWith("COUNT")) {
+                countdownLabel.setText("Update in " + str.substring(5));
+            } else if (str.startsWith("SIZE")) {
+
+                onlineLabel.setText("Online: " + str.substring(4) + "/ 20");
+                System.out.println("Total users: " + str.substring(4));
+            } else if (str.startsWith("FULL")) {
+                String[] options = {"Exit"};
+                int select = JOptionPane.showOptionDialog(this, "What do you want to do?", "Server is full", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+                if (select == 0) {
+                    System.exit(0);
                 }
-                assert str != null;
-                if (str.equals("NAMEREQUIRED")) {
+            } else if (str.startsWith("NICKUPDATED")) {
+                chatArea.append(">> [Your nickname is now: " + str.substring(11).split("/")[0] + "] << " + "\n");
+                nameLabel.setText("You are logged in as: " + str.substring(11).split("/")[0] + "\n");
+                clientHandler.setName(str.substring(11).split("/")[0]);
+            } else if (str.startsWith("NICKNAME")) {
+                String[] params = str.substring(8).split("/");
 
-                    while (name.equals("") && !name.matches("^[a-zA-Z0-9]+$")) {
-                        name = JOptionPane.showInputDialog(
-                                chatWindow,
-                                "Enter an unique name:",
-                                "Name required!",
-                                JOptionPane.PLAIN_MESSAGE);
-                        if (!name.matches("^[a-zA-Z0-9]+$")) {
-                            JOptionPane.showMessageDialog(chatWindow,
-                                    "Name must contain only alphanumeric characters",
-                                    "Error",
-                                    JOptionPane.ERROR_MESSAGE);
-                            name = "";
-                        }
-
-                    }
-
-                    out.println(name);
-                } else if (str.equals("NAMEALREADYEXISTS") ) {
-                    String name = "";
-                    while (name.equals("") && !name.matches("^[a-zA-Z0-9]+$")) {
-                        name = JOptionPane.showInputDialog(
-                                chatWindow,
-                                "Enter a different name:",
-                                "Name already exists!",
-                                JOptionPane.WARNING_MESSAGE);
-
-                        if (!name.matches("^[a-zA-Z0-9]+$")) {
-                            JOptionPane.showMessageDialog(chatWindow,
-                                    "Name must contain only alphanumeric characters",
-                                    "Error",
-                                    JOptionPane.ERROR_MESSAGE);
-                            name = "";
-                        }
-                    }
-
-                    out.println(name);
-
-                } else if (str.startsWith("NAMEACCEPTED")) {
-                    String name = str.substring(12);
-                    clientHandler = new ClientHandler(textField, chatArea, name, out, defaultListModel);
-                    sendButton.addActionListener(clientHandler);
-                    textField.addActionListener(clientHandler);
-                    textField.setEditable(true);
-                    nameLabel.setText("You are logged in as: " + name + "\n");
-                } else if (str.equals("PING")) {
-                    Thread pingThread = new Thread(() -> {
-                        String name = nameLabel.getText().substring(22);
-                        System.out.println(nameLabel.getText());
-                        out.println("PONG" + name);
-                        System.out.println(name + "IS SENDING A PONG");
-                    });
-                    pingThread.start();
-
-                } else if (str.startsWith("//")) {
-                    String finalStr = str;
-                    Thread listThread = new Thread(() -> {
-                        String[] arrayNames = finalStr.substring(2).split(",");
-                        System.out.println(Arrays.asList(arrayNames));
-
-                        arrayNames[0] = "@" + arrayNames[0];
-
-                        defaultListModel.clear();
-                        defaultListModel.addAll(Arrays.asList(arrayNames));
-                        users.setModel(defaultListModel);
-                    });
-                    listThread.start();
-
-                } else if (str.startsWith("NEWADMIN")) {
-                    System.out.println("Changing admin");
-                    chatArea.append(">> [Previous admin " + str.substring(8).split("/")[0] +
-                            " has disconnected, new admin is: " + str.substring(8).split("/")[1] + "] <<" + "\n");
-                } else if (str.equals("FIRST")) {
-                    JOptionPane.showMessageDialog(chatWindow, "You are the first user in the chat");
-                } else if (str.startsWith("OFFLINE")) {
-                    chatArea.append(">> [" + str.substring(7) + " is offline] <<" + "\n" + "");
-                    defaultListModel.removeElement(str.substring(7));
-                    users.setModel(defaultListModel);
-                } else if (str.startsWith("COUNT")) {
-                    countdownLabel.setText("Update in " + str.substring(5));
-                } else if (str.startsWith("SIZE")) {
-
-                    onlineLabel.setText("Online: " + str.substring(4) + "/ 20");
-                    System.out.println("Total users: " + str.substring(4));
-                } else if (str.startsWith("FULL")) {
-                    String[] options = {"Exit"};
-                    int select = JOptionPane.showOptionDialog(chatWindow, "What do you want to do?", "Server is full", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
-                    if (select == 0) {
-                        System.exit(0);
-                    }
-                } else if (str.startsWith("NICKUPDATED")) {
-                    chatArea.append(">> [Your nickname is now: " + str.substring(11).split("/")[0] + "] << " + "\n");
-                    nameLabel.setText("You are logged in as: " +  str.substring(11).split("/")[0] + "\n");
-                    clientHandler.setName(str.substring(11).split("/")[0]);
-                } else if (str.startsWith("NICKNAME")) {
-                    String[] params = str.substring(8).split("/");
-
-                    String previous = params[1];
-                    String newName = params[0];
-                    int index = defaultListModel.indexOf(previous);
-                    if (index != -1) {
-                        defaultListModel.setElementAt(newName, index);
-                        users.setModel(defaultListModel);
-                    }
-
-
-                    chatArea.append(">> [" + previous + " has changed its nickname to: " + newName + "] <<" + "\n");
-                } else if (str.startsWith("BACKONLINE")) {
-                    int index = defaultListModel.indexOf(str.substring(10) + "(A)");
-                    if (index == -1) {
-                        index = defaultListModel.indexOf("@" + str.substring(10) + "(A)");
-                        defaultListModel.setElementAt("@" + str.substring(10), index);
-                    } else defaultListModel.setElementAt(str.substring(10), index);
-                    users.setModel(defaultListModel);
-                    chatArea.append(">> [" + str.substring(10) + " is now back from being away] <<" + "\n");
-                } else if (str.startsWith("AFK")) {
-                    int index = defaultListModel.indexOf(str.substring(3));
-                    if (index == -1) {
-                        index = defaultListModel.indexOf("@" + str.substring(3));
-                        defaultListModel.setElementAt("@" + str.substring(3) + "(A)", index);
-                    } else defaultListModel.setElementAt(str.substring(3) + "(A)", index);
+                String previous = params[1];
+                String newName = params[0];
+                int index = defaultListModel.indexOf(previous);
+                if (index != -1) {
+                    defaultListModel.setElementAt(newName, index);
                     users.setModel(defaultListModel);
                 }
-                else {
+
+
+                chatArea.append(">> [" + previous + " has changed its nickname to: " + newName + "] <<" + "\n");
+            } else if (str.startsWith("BACKONLINE")) {
+                int index = defaultListModel.indexOf(str.substring(10) + "(A)");
+                if (index == -1) {
+                    index = defaultListModel.indexOf("@" + str.substring(10) + "(A)");
+                    defaultListModel.setElementAt("@" + str.substring(10), index);
+                } else defaultListModel.setElementAt(str.substring(10), index);
+                users.setModel(defaultListModel);
+                chatArea.append(">> [" + str.substring(10) + " is now back from being away] <<" + "\n");
+            } else if (str.startsWith("AFK")) {
+                int index = defaultListModel.indexOf(str.substring(3));
+                if (index == -1) {
+                    index = defaultListModel.indexOf("@" + str.substring(3));
+                    defaultListModel.setElementAt("@" + str.substring(3) + "(A)", index);
+                } else defaultListModel.setElementAt(str.substring(3) + "(A)", index);
+                users.setModel(defaultListModel);
+            } else {
+                if (!str.startsWith("NAMEACCEPTED"))
                     chatArea.append(str + "\n");
-                }
             }
         });
         newThread.start();

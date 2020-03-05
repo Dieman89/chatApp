@@ -38,15 +38,12 @@ public class ChatServer {
                             ServerHandler.compareArrays();
                         }
                     }
-
                     seconds = 5;
                 }
             }
         });
 
         countThread.start();
-
-
 
         try {
             ServerSocket ss = new ServerSocket(9806);

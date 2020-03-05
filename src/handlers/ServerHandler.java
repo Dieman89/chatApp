@@ -17,8 +17,6 @@ public class ServerHandler extends Thread {
     static ArrayList<PrintWriter> writers;
     static ArrayList<Boolean> statusArray;
     private ArrayList<String> reasons;
-    private Boolean full = false;
-
 
     public ServerHandler(Socket socket, ArrayList<Socket> sockets, ArrayList<String> userNames, ArrayList<String> onlineUsers, ArrayList<PrintWriter> writers, ArrayList<Boolean> statusArray,
                          ArrayList<String> reasons) {
@@ -76,22 +74,12 @@ public class ServerHandler extends Thread {
     }
 
     public void run() {
+
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out1 = new PrintWriter(socket.getOutputStream(), true);
-
-            int count = 0;
             while (true) {
-                if (!this.full) {
-                    if (count > 0) {
-                        out1.println("NAMEALREADYEXISTS");
-                    } else {
-                        out1.println("NAMEREQUIRED");
-                    }
-                    name = in.readLine();
-
-                }
-
+                name = in.readLine();
                 // DO NOT MODIFY THIS CODE
                 if (ServerHandler.userNames.size() <= 19) {
                     if (!ServerHandler.userNames.contains(name)) {
@@ -105,17 +93,16 @@ public class ServerHandler extends Thread {
                             this.sockets.add(socket);
                         }
                         break;
-                    }
+                    } else out1.println("NAMEALREADYEXISTS");
                 } else {
-                    this.full = true;
                     out1.println("FULL");
                     throw new SocketException();
                 }
 
                 //////
-                count++;
             }
-            out1.println("NAMEACCEPTED" + name);
+            out1.println("NAMEACCEPTED");
+
             if (ServerHandler.onlineUsers.size() == 1) {
                 out1.println("FIRST");
             }
@@ -132,8 +119,8 @@ public class ServerHandler extends Thread {
                         out1.println("ID: " + ServerHandler.userNames.get(i) + "/ IP: " + sockets.get(i).getInetAddress() + ", PORT: " + sockets.get(i).getPort());
                 }
             }
-            ServerHandler.writers.add(out1);
-
+            if (!ServerHandler.writers.contains(out1))
+                ServerHandler.writers.add(out1);
             while (true) { //read all the messages
                 String message = in.readLine();
                 FileWriter fw;
