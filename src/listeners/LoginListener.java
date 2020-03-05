@@ -83,7 +83,7 @@ public class LoginListener implements ActionListener {
                     inThread.start();
 
                 } catch (IOException ex) {
-                    errorLabel.setText("IP address not correct");
+                    errorLabel.setText("Connection not possible");
                     ipAddress.setText("");
                 } catch (Exception ex) {
                     ex.printStackTrace();

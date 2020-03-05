@@ -15,7 +15,7 @@ public class Login extends JFrame {
 
     public Login() {
 
-        setSize(new Dimension(450, 540));
+        setSize(new Dimension(450, 560));
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -74,8 +74,10 @@ public class Login extends JFrame {
         JPanel optionsPanel = new JPanel(new BorderLayout(40, 70));
         optionsPanel.setBackground(new Color(35, 39, 42));
         JButton loginButton = new JButton("LOGIN");
+        loginButton.setPreferredSize(new Dimension(100, 50));
         loginButton.setBackground(new Color(153, 170, 181));
         JButton exitButton = new JButton("EXIT");
+        exitButton.setPreferredSize(new Dimension(100, 50));
         exitButton.setBackground(new Color(153, 170, 181));
         optionsPanel.add(loginButton, BorderLayout.WEST);
         optionsPanel.add(exitButton, BorderLayout.EAST);
