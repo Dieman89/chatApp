@@ -26,7 +26,7 @@ public class ChatClient {
 
     ChatClient() {
         chatWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-
+        chatWindow.setResizable(false);
         chatArea.addKeyListener(new ExitListener());
         textField.addKeyListener(new ExitListener());
         users.addKeyListener(new ExitListener());

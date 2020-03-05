@@ -3,9 +3,17 @@
     <words>
       <w>aset</w>
       <w>avenir</w>
+      <w>backonline</w>
       <w>clearlogs</w>
+      <w>goonline</w>
+      <w>nameaccepted</w>
       <w>namealreadyexists</w>
+      <w>namerequired</w>
+      <w>newadmin</w>
       <w>nickchange</w>
+      <w>nickupdated</w>
+      <w>usernames</w>
+      <w>whois</w>
     </words>
   </dictionary>
 </component>
