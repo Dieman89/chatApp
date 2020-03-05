@@ -1,11 +1,9 @@
+package listeners;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class ExitListener implements KeyListener {
-
-    public ExitListener() {
-
-    }
 
     @Override
     public void keyTyped(KeyEvent e) {

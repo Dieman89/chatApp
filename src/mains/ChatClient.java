@@ -1,3 +1,8 @@
+package mains;
+
+import handlers.ClientHandler;
+import listeners.ExitListener;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;

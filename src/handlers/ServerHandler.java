@@ -1,3 +1,5 @@
+package handlers;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
@@ -5,12 +7,12 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-class ServerHandler extends Thread {
+public class ServerHandler extends Thread {
     private File file;
     private ArrayList<Socket> sockets;
     private Socket socket;
     private String name;
-    static ArrayList<String> userNames;
+    public static ArrayList<String> userNames;
     static ArrayList<String> onlineUsers;
     static ArrayList<PrintWriter> writers;
     static ArrayList<Boolean> statusArray;
@@ -158,7 +160,7 @@ class ServerHandler extends Thread {
 
                     System.out.println(ServerHandler.statusArray);
 
-                    //if (!senderCheck.equals(ServerHandler.userNames.get(sender))) {
+                    //if (!senderCheck.equals(handlers.ServerHandler.userNames.get(sender))) {
                     if (ServerHandler.userNames.size() > 1) {
                         if (!ServerHandler.userNames.get(targetMsg).equals(ServerHandler.userNames.get(sender))) {
                             if (ServerHandler.userNames.contains(arrays[1])) {
@@ -322,7 +324,7 @@ class ServerHandler extends Thread {
         return userNames;
     }
 
-    static void updateSeconds(int seconds) {
+    public static void updateSeconds(int seconds) {
         ServerHandler.sendCount(seconds);
     }
 }

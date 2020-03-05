@@ -1,9 +1,11 @@
+package handlers;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.PrintWriter;
 
-class ClientHandler implements ActionListener {
+public class ClientHandler implements ActionListener {
 
     private JTextArea chatArea;
     private JTextField textField;
