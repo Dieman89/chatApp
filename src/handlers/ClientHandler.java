@@ -96,4 +96,8 @@ public class ClientHandler implements ActionListener {
         } else this.out.println(this.textField.getText());
         this.textField.setText("");
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

@@ -154,7 +154,7 @@ public class ServerHandler extends Thread {
                     System.out.println(Arrays.toString(arrays));
 
                     int targetMsg = ServerHandler.userNames.indexOf(arrays[1]);
-                    int sender = ServerHandler.userNames.indexOf(arrays[0]);
+                    int sender = ServerHandler.userNames.indexOf(this.name);
 
                     String msg = arrays[2];
 
@@ -187,25 +187,20 @@ public class ServerHandler extends Thread {
                     if (ServerHandler.userNames.contains(arrays[1])) {
                         ServerHandler.writers.get(destination).println("ID " + ServerHandler.userNames.get(target) + ", IP: " + this.sockets.get(target).getInetAddress() + ", PORT: " + this.sockets.get(target).getPort());
                     } else ServerHandler.writers.get(destination).println(">> [User not found] <<");
-                } else if (message.startsWith("NICKCHANGE")) {
+                }
+
+                else if (message.startsWith("NICKCHANGE")) {
                     String[] username = message.substring(10).split("/");
                     System.out.println(Arrays.toString(username));
 
                     if (!ServerHandler.userNames.contains(username[0])) {
                         int index = ServerHandler.userNames.indexOf(username[1]);
 
-                        ArrayList<String> cloneArray;
-                        cloneArray = ServerHandler.userNames;
+                        ServerHandler.userNames.set(index, username[0]);
+                        ServerHandler.onlineUsers.set(index, username[0]);
 
-                        cloneArray.set(index, username[0]);
-
-                        System.out.println(ServerHandler.writers);
-
-                        ServerHandler.userNames = cloneArray;
-                        ServerHandler.onlineUsers = cloneArray;
-
-                        System.out.println(ServerHandler.writers);
-
+                        System.out.println(ServerHandler.userNames);
+                        this.name = username[0];
                         ServerHandler.writers.get(index).println("NICKUPDATED" + username[0] + "/" + username[1]);
 
                         this.name = username[0];
@@ -217,7 +212,9 @@ public class ServerHandler extends Thread {
 
                     }
 
-                } else if (message.startsWith("AWAY")) {
+                }
+
+                else if (message.startsWith("AWAY")) {
                     String[] arrays = message.substring(4).split("/");
 
                     int index = ServerHandler.userNames.indexOf(arrays[0]);
@@ -228,7 +225,9 @@ public class ServerHandler extends Thread {
                         out.println(">> [The user " + arrays[0] + " is away for this reason: " + arrays[1] + "] <<");
                         out.println("AFK" + arrays[0]);
                     }
-                } else if (message.startsWith("GOONLINE")) {
+                }
+
+                else if (message.startsWith("GOONLINE")) {
 
                     System.out.println(message.substring(8));
 
@@ -245,7 +244,9 @@ public class ServerHandler extends Thread {
                         }
                     }
 
-                } else if (message.equals("CLEARLOGS")) {
+                }
+
+                else if (message.equals("CLEARLOGS")) {
                     fw = new FileWriter(file);
                     bw = new BufferedWriter(fw);
                     pw = new PrintWriter(bw, true);

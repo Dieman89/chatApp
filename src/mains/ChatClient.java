@@ -23,6 +23,7 @@ public class ChatClient {
      String name = "";
      DefaultListModel<String> defaultListModel = new DefaultListModel<>();
      JButton sendButton = new JButton("Send");
+     ClientHandler clientHandler;
 
     ChatClient() {
         chatWindow.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -179,8 +180,9 @@ public class ChatClient {
 
                 } else if (str.startsWith("NAMEACCEPTED")) {
                     String name = str.substring(12);
-                    sendButton.addActionListener(new ClientHandler(textField, chatArea, name, out, defaultListModel));
-                    textField.addActionListener(new ClientHandler(textField, chatArea, name, out, defaultListModel));
+                    clientHandler = new ClientHandler(textField, chatArea, name, out, defaultListModel);
+                    sendButton.addActionListener(clientHandler);
+                    textField.addActionListener(clientHandler);
                     textField.setEditable(true);
                     nameLabel.setText("You are logged in as: " + name + "\n");
                 } else if (str.equals("PING")) {
@@ -229,20 +231,21 @@ public class ChatClient {
                         System.exit(0);
                     }
                 } else if (str.startsWith("NICKUPDATED")) {
-                    nameLabel.setText("You are logged in as: " + str.substring(11).split("/")[0] + "\n");
                     chatArea.append(">> [Your nickname is now: " + str.substring(11).split("/")[0] + "] << " + "\n");
-
+                    nameLabel.setText("You are logged in as: " +  str.substring(11).split("/")[0] + "\n");
+                    clientHandler.setName(str.substring(11).split("/")[0]);
                 } else if (str.startsWith("NICKNAME")) {
                     String[] params = str.substring(8).split("/");
 
                     String previous = params[1];
                     String newName = params[0];
-
                     int index = defaultListModel.indexOf(previous);
                     if (index != -1) {
                         defaultListModel.setElementAt(newName, index);
                         users.setModel(defaultListModel);
                     }
+
+
                     chatArea.append(">> [" + previous + " has changed its nickname to: " + newName + "] <<" + "\n");
                 } else if (str.startsWith("BACKONLINE")) {
                     int index = defaultListModel.indexOf(str.substring(10) + "(A)");
