@@ -30,7 +30,7 @@ class ServerHandler extends Thread {
         this.statusArray = statusArray;
         this.reasons = reasons;
 
-        file = new File("src/logs.txt");
+        file = new File("logs/logs.txt");
         Thread secondsThread = new Thread(() -> {
             while (seconds >= 0) {
                 updateSeconds(seconds);

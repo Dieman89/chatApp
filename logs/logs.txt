@@ -1,0 +1,3 @@
+[2020-03-05 02:07:52.92] Tommaso: javax.swing.JTextField[,0,0,521x30,layout=javax.swing.plaf.basic.BasicTextUI$UpdateHandler,alignmentX=0.0,alignmentY=0.0,border=javax.swing.plaf.BorderUIResource$CompoundBorderUIResource@7f3761d7,flags=296,maximumSize=,minimumSize=,preferredSize=,caretColor=sun.swing.PrintColorUIResource[r=51,g=51,b=51],disabledTextColor=javax.swing.plaf.ColorUIResource[r=184,g=207,b=229],editable=true,margin=javax.swing.plaf.InsetsUIResource[top=0,left=0,bottom=0,right=0],selectedTextColor=sun.swing.PrintColorUIResource[r=51,g=51,b=51],selectionColor=javax.swing.plaf.ColorUIResource[r=184,g=207,b=229],columns=40,columnWidth=0,command=,horizontalAlignment=LEADING]
+[2020-03-05 02:09:11.716] Dieman: ciao
+[2020-03-05 02:09:15.249] Tommaso: come va?

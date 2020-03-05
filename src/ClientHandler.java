@@ -113,7 +113,7 @@ class ClientHandler implements ActionListener {
                     "/help to see all the commands" + "\n");
         }
 
-        else this.out.println(this.textField);
+        else this.out.println(this.textField.getText());
         this.textField.setText("");
     }
 }
