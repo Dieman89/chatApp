@@ -39,11 +39,11 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-<p align="left">
+<p align="center">
     <img src="images/screenshot.png">
 </p>
 
-<p align="right">
+<p align="center">
 <img src="images/unknown.png">
 </p>
 
