@@ -174,9 +174,7 @@ public class ServerHandler extends Thread {
                     if (ServerHandler.userNames.contains(arrays[1])) {
                         ServerHandler.writers.get(destination).println("ID " + ServerHandler.userNames.get(target) + ", IP: " + this.sockets.get(target).getInetAddress() + ", PORT: " + this.sockets.get(target).getPort());
                     } else ServerHandler.writers.get(destination).println(">> [User not found] <<");
-                }
-
-                else if (message.startsWith("NICKCHANGE")) {
+                } else if (message.startsWith("NICKCHANGE")) {
                     String[] username = message.substring(10).split("/");
                     System.out.println(Arrays.toString(username));
 
@@ -197,9 +195,7 @@ public class ServerHandler extends Thread {
                         }
 
                     }
-                }
-
-                else if (message.startsWith("AWAY")) {
+                } else if (message.startsWith("AWAY")) {
                     String[] arrays = message.substring(4).split("/");
 
                     int index = ServerHandler.userNames.indexOf(arrays[0]);
@@ -210,9 +206,7 @@ public class ServerHandler extends Thread {
                         out.println(">> [The user " + arrays[0] + " is away for this reason: " + arrays[1] + "] <<");
                         out.println("AFK" + arrays[0]);
                     }
-                }
-
-                else if (message.startsWith("GOONLINE")) {
+                } else if (message.startsWith("GOONLINE")) {
 
                     System.out.println(message.substring(8));
 
@@ -229,9 +223,7 @@ public class ServerHandler extends Thread {
                         }
                     }
 
-                }
-
-                else if (message.equals("CLEARLOGS")) {
+                } else if (message.equals("CLEARLOGS")) {
                     fw = new FileWriter(file);
                     bw = new BufferedWriter(fw);
                     pw = new PrintWriter(bw, true);
@@ -313,4 +305,5 @@ public class ServerHandler extends Thread {
     public static void updateSeconds(int seconds) {
         ServerHandler.sendCount(seconds);
     }
+
 }

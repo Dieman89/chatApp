@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class LoginListener implements ActionListener {
 
@@ -91,25 +92,5 @@ public class LoginListener implements ActionListener {
                 }
             } else errorLabel.setText("Name must contain only alphanumeric characters");
         }
-    }
-
-
-    ////////////// FOR TEST /////////////
-    public static String errorName(String user, String ip) {
-        String error;
-        if (!ip.trim().equals("") || !user.trim().equals("")) {
-            if (user.matches("^[a-zA-Z0-9]+$") && (ip.matches("(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)")
-                    || ip.matches("^[a-zA-Z0-9]+$")))
-                error = "PASSED";
-            else error = "FAILED";
-        } else error = "FAILED";
-
-        return error;
-    }
-    ////////////// FOR TEST /////////////
-
-
-    public JLabel getErrorLabel() {
-        return errorLabel;
     }
 }
