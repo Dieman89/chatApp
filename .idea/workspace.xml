@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="e7bdd69f-8e13-4120-8cbd-36b473c5a8e8" name="Default Changelist" comment="First Commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/Tests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/Tests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mains/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mains/ChatClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mains/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mains/Login.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,24 +67,37 @@
       <recent name="listeners" />
       <recent name="handlers" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\44784\Desktop\chatApp\chatApp\logs" />
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\44784\Desktop\chatApp\chatApp\images" />
-      <recent name="C:\Users\44784\Desktop\chatApp\chatApp\fonts" />
-      <recent name="$PROJECT_DIR$/src" />
-      <recent name="$PROJECT_DIR$/images" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\44784\Desktop\chatApp\chatApp\images" />
+      <recent name="C:\Users\44784\Desktop\chatApp\chatApp\logs" />
+      <recent name="C:\Users\44784\Desktop\chatApp\chatApp\fonts" />
+      <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/images" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Login">
     <configuration name="ChatClient" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="mains.ChatClient" />
       <module name="Chat" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ChatServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="mains.ChatServer" />
+      <module name="Chat" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="mains.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -148,37 +162,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Tests.removeIfNotRepond" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="Chat" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.Tests" />
-      <option name="METHOD_NAME" value="removeIfNotRepond" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <list>
       <item itemvalue="Application.ChatClient" />
       <item itemvalue="JUnit.Tests" />
       <item itemvalue="JUnit.Tests.chageAdmin" />
       <item itemvalue="JUnit.Tests.changeAdmin" />
-      <item itemvalue="JUnit.Tests.removeIfNotRepond" />
       <item itemvalue="Application.Login" />
+      <item itemvalue="Application.ChatServer" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Login" />
+        <item itemvalue="Application.ChatServer" />
         <item itemvalue="JUnit.Tests" />
         <item itemvalue="JUnit.Tests.changeAdmin" />
         <item itemvalue="JUnit.Tests.chageAdmin" />
-        <item itemvalue="JUnit.Tests.removeIfNotRepond" />
       </list>
     </recent_temporary>
   </component>
@@ -264,25 +262,25 @@
     </state>
     <state x="459" y="36" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1583246411615" />
     <state x="344" y="53" key="CommitChangelistDialog2/0.23.1440.877@0.23.1440.877" timestamp="1582919691058" />
-    <state width="916" height="393" key="GridCell.Tab.0.bottom" timestamp="1583454282236">
+    <state width="916" height="393" key="GridCell.Tab.0.bottom" timestamp="1583454821468">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="916" height="393" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583454282236" />
+    <state width="916" height="393" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583454821468" />
     <state width="1419" height="230" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1583271987314" />
-    <state width="916" height="393" key="GridCell.Tab.0.center" timestamp="1583454282235">
+    <state width="916" height="393" key="GridCell.Tab.0.center" timestamp="1583454821468">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="916" height="393" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583454282235" />
+    <state width="916" height="393" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583454821468" />
     <state width="1419" height="230" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1583271987313" />
-    <state width="916" height="393" key="GridCell.Tab.0.left" timestamp="1583454282235">
+    <state width="916" height="393" key="GridCell.Tab.0.left" timestamp="1583454821468">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="916" height="393" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583454282235" />
+    <state width="916" height="393" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583454821468" />
     <state width="1419" height="230" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1583271987311" />
-    <state width="916" height="393" key="GridCell.Tab.0.right" timestamp="1583454282235">
+    <state width="916" height="393" key="GridCell.Tab.0.right" timestamp="1583454821468">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="916" height="393" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583454282235" />
+    <state width="916" height="393" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583454821468" />
     <state width="1419" height="230" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1583271987313" />
     <state width="914" height="345" key="GridCell.Tab.1.bottom" timestamp="1583453421100">
       <screen x="0" y="0" width="1920" height="1040" />

@@ -44,7 +44,7 @@ public class ChatClient extends JFrame {
         JPanel chatPanel = new JPanel(new BorderLayout());
         chatPanel.setPreferredSize(new Dimension(400, 570));
 
-        textField.setBackground(new Color(153, 170, 181));
+        textField.setBackground(new Color(66,69,73));
         textField.setForeground(Color.WHITE);
         JPanel textPanel = new JPanel(new BorderLayout());
         textPanel.add(textField, BorderLayout.CENTER);
@@ -95,6 +95,7 @@ public class ChatClient extends JFrame {
             chatArea.setFont(customFont);
             onlineLabel.setFont(customFont);
             users.setFont(customFont);
+            textField.setFont(customFont);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
         }

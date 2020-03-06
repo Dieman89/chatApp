@@ -38,9 +38,9 @@ public class Login extends JFrame {
         //////////// IMAGE ///////////////
         JPanel imagePanel = new JPanel(new BorderLayout());
         imagePanel.setPreferredSize(new Dimension(400, 200));
-        imagePanel.setBackground(new Color(66,69,73));
+        imagePanel.setBackground(new Color(35, 39, 42));
         //imagePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
-        ImageIcon logo = new ImageIcon("images/logo.png");
+        ImageIcon logo = new ImageIcon("images/logo2.png");
         Image image = logo.getImage().getScaledInstance(191, 153, Image.SCALE_DEFAULT);
         ImageIcon finalLogo = new ImageIcon(image);
         JLabel logoLabel = new JLabel(finalLogo);
@@ -74,11 +74,15 @@ public class Login extends JFrame {
         JPanel optionsPanel = new JPanel(new BorderLayout(40, 70));
         optionsPanel.setBackground(new Color(35, 39, 42));
         JButton loginButton = new JButton("LOGIN");
-        loginButton.setPreferredSize(new Dimension(100, 50));
-        loginButton.setBackground(new Color(153, 170, 181));
+        loginButton.setPreferredSize(new Dimension(80, 35));
+        loginButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        loginButton.setBackground(new Color(35, 39, 42));
+        loginButton.setForeground(Color.WHITE);
         JButton exitButton = new JButton("EXIT");
-        exitButton.setPreferredSize(new Dimension(100, 50));
-        exitButton.setBackground(new Color(153, 170, 181));
+        exitButton.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+        exitButton.setPreferredSize(new Dimension(80, 35));
+        exitButton.setBackground(new Color(35, 39, 42));
+        exitButton.setForeground(Color.WHITE);
         optionsPanel.add(loginButton, BorderLayout.WEST);
         optionsPanel.add(exitButton, BorderLayout.EAST);
 
