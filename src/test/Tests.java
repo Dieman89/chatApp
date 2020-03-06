@@ -12,7 +12,7 @@ class Tests {
         String actual = TestMethods.errorName("Tommaso", "localhost");
         Assertions.assertEquals("PASSED", actual);
 
-        System.out.println("1) Test passed: input values are valid");
+        System.out.print("1) Test passed: input values are valid");
     }
 
     @Test
@@ -22,7 +22,7 @@ class Tests {
 
         Assertions.assertTrue(first);
 
-        System.out.println("2) Test passed: size of array was zero");
+        System.out.print("2) Test passed: size of array was zero");
     }
 
     @Test
@@ -34,7 +34,7 @@ class Tests {
 
         Assertions.assertEquals("MESSAGE SENT TO THE OTHERS", first);
 
-        System.out.println("3) Test passed: size of array was greater than one");
+        System.out.print("3) Test passed: size of array was greater than one");
     }
 
     @Test
@@ -52,7 +52,7 @@ class Tests {
 
         Assertions.assertArrayEquals(strings, finalArray.toArray());
 
-        System.out.println("4) Test passed: first element of array is different");
+        System.out.print("4) Test passed: first element of array is different");
     }
 
     @Test
@@ -69,6 +69,6 @@ class Tests {
 
         Assertions.assertEquals("New admin = Dieman", actual);
 
-        System.out.println("5) Test passed: first element of array is the new admin");
+        System.out.print("5) Test passed: first element of array is the new admin");
     }
 }

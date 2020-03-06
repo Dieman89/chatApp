@@ -38,7 +38,7 @@ public class Login extends JFrame {
         //////////// IMAGE ///////////////
         JPanel imagePanel = new JPanel(new BorderLayout());
         imagePanel.setPreferredSize(new Dimension(400, 200));
-        imagePanel.setBackground(new Color(153, 170, 181));
+        imagePanel.setBackground(new Color(66,69,73));
         //imagePanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         ImageIcon logo = new ImageIcon("images/logo.png");
         Image image = logo.getImage().getScaledInstance(191, 153, Image.SCALE_DEFAULT);
