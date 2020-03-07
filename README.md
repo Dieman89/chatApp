@@ -41,7 +41,7 @@
 ## About The Project
 <p align="center">
     <img src="images/screenshot.png">
-    <img src="images/login.png">
+    <img src="images/login.png" width="562px" height="672px">
 </p>
 
 This application implements a networked distributed system for a group-based peer to peer communication, which conforms
