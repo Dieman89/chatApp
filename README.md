@@ -41,7 +41,6 @@
 ## About The Project
 <p align="center">
     <img src="images/screenshot.png">
-    <img src="images/unknown.png" width="500px" height="650px">
     <img src="images/login.png" width="562px" height="672px">
 </p>
 
