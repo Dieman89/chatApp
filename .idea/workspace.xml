@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e7bdd69f-8e13-4120-8cbd-36b473c5a8e8" name="Default Changelist" comment="First Commit">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mains/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mains/ChatClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mains/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mains/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chat.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Chat.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handlers/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/ClientHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +20,7 @@
       <list>
         <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="AnnotationType" />
       </list>
     </option>
   </component>
@@ -46,7 +48,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Downloaded.Files.Path.Enabled" value="true" />
     <property name="Repository.Attach.Annotations" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
@@ -66,6 +68,9 @@
     <key name="CreateTestDialog.RecentsKey">
       <recent name="listeners" />
       <recent name="handlers" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="test" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\44784\Desktop\chatApp\chatApp\images" />
@@ -164,11 +169,11 @@
     </configuration>
     <list>
       <item itemvalue="Application.ChatClient" />
+      <item itemvalue="Application.Login" />
+      <item itemvalue="Application.ChatServer" />
       <item itemvalue="JUnit.Tests" />
       <item itemvalue="JUnit.Tests.chageAdmin" />
       <item itemvalue="JUnit.Tests.changeAdmin" />
-      <item itemvalue="Application.Login" />
-      <item itemvalue="Application.ChatServer" />
     </list>
     <recent_temporary>
       <list>
@@ -245,10 +250,11 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="765" y="229" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1583425922437" />
-    <state x="808" y="409" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1583272108049">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="606" y="368" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1583486756713">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="808" y="409" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1583272108049" />
+    <state x="606" y="368" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.23.1440.877@0.23.1440.877" timestamp="1583486756713" />
     <state x="408" y="196" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1583268489466">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -262,26 +268,26 @@
     </state>
     <state x="459" y="36" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1583246411615" />
     <state x="344" y="53" key="CommitChangelistDialog2/0.23.1440.877@0.23.1440.877" timestamp="1582919691058" />
-    <state width="916" height="393" key="GridCell.Tab.0.bottom" timestamp="1583454821468">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1419" height="230" key="GridCell.Tab.0.bottom" timestamp="1583577309258">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="916" height="393" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1583454821468" />
-    <state width="1419" height="230" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1583271987314" />
-    <state width="916" height="393" key="GridCell.Tab.0.center" timestamp="1583454821468">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1419" height="230" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1583577309258" />
+    <state width="1419" height="230" key="GridCell.Tab.0.center" timestamp="1583577309257">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="916" height="393" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1583454821468" />
-    <state width="1419" height="230" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1583271987313" />
-    <state width="916" height="393" key="GridCell.Tab.0.left" timestamp="1583454821468">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1419" height="230" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1583577309257" />
+    <state width="1419" height="230" key="GridCell.Tab.0.left" timestamp="1583577309257">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="916" height="393" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1583454821468" />
-    <state width="1419" height="230" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1583271987311" />
-    <state width="916" height="393" key="GridCell.Tab.0.right" timestamp="1583454821468">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state width="1419" height="230" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1583577309257" />
+    <state width="1419" height="230" key="GridCell.Tab.0.right" timestamp="1583577309258">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="916" height="393" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1583454821468" />
-    <state width="1419" height="230" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1583271987313" />
+    <state width="1419" height="230" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1583577309258" />
     <state width="914" height="345" key="GridCell.Tab.1.bottom" timestamp="1583453421100">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -327,14 +333,15 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="534" y="270" key="Vcs.Push.Dialog.v2/0.23.1440.877@0.23.1440.877" timestamp="1582920553096" />
-    <state x="397" y="294" key="com.intellij.ide.util.TipDialog" timestamp="1583270784699">
+    <state x="397" y="294" key="com.intellij.ide.util.TipDialog" timestamp="1583577224184">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="397" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1583270784699" />
-    <state x="664" y="413" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1583444982707">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="397" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1583577224184" />
+    <state x="498" y="371" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1583486785259">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="664" y="413" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.0.1920.1040@0.0.1920.1040" timestamp="1583444982707" />
+    <state x="498" y="371" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.23.1440.877@0.23.1440.877" timestamp="1583486785259" />
     <state x="769" y="437" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1583371955954">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
