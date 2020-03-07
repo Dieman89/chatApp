@@ -41,6 +41,7 @@
 ## About The Project
 <p align="center">
     <img src="images/screenshot.png">
+    <img src="images/login.png">
 </p>
 
 This application implements a networked distributed system for a group-based peer to peer communication, which conforms
@@ -82,6 +83,7 @@ This project demonstrate the following programming principles and practices:
 
 * [IntelliJ Idea](https://www.jetbrains.com/idea/)
 * [Java](https://www.java.com/)
+* [JUnit](https://junit.org/junit5/)
 
 ## License
 
