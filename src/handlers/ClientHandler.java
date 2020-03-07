@@ -74,8 +74,11 @@ public class ClientHandler implements ActionListener {
                     this.out.println("NICKCHANGE" + param + "/" + this.name);
                 }
             } else if (this.textField.getText().substring(1).startsWith("away")) {
-                String reason = this.textField.getText().substring(6);
-                this.out.println("AWAY" + name + "/" + reason);
+                if (this.textField.getText().trim().substring(5).length() > 0) {
+
+                    String reason = this.textField.getText().substring(5);
+                    this.out.println("AWAY" + name + "/" + reason);
+                } else chatArea.append(">> [The command /away needs a parameter] <<" + "\n");
             } else if (this.textField.getText().substring(1).trim().equals("online")) {
                 this.out.println("GOONLINE" + name);
             } else if (this.textField.getText().substring(1).trim().equals("clearlogs")) {
