@@ -93,7 +93,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Alessandro Buonerba [@Dieman_](https://twitter.com/Dieman_) - a.buonerba@hotmail.com
 
-Tommaso Bruno [@Tommy__of](https://twitter.com/Tommy__of) - tommaso_bruno@icloud.com
+Tommaso Bruno [@Tommy__of](https://twitter.com/Tommy__of) - tommasobruno.in.uk@gmail.com
 
 Project Link: [https://github.com/Dieman89/chatApp](https://github.com/Dieman89/chatApp)
 
